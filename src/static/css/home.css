@@ -1,0 +1,76 @@
+/* Base layout */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+/* Carousel styling */
+.carousel-item img {
+    max-height: 400px;
+    object-fit: cover;
+}
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Dashboard cards */
+.card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+}
+.card .card-body {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.card .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: #fff;
+}
+.card p, .card ul {
+    color: #fff;
+    font-size: 1rem;
+}
+.card .btn-light {
+    background-color: rgba(255,255,255,0.8);
+    color: #333;
+    font-weight: 600;
+}
+
+/* Utility classes */
+.display-6 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .carousel-item img {
+        max-height: 250px;
+    }
+    .card .card-body {
+        padding: 15px;
+    }
+    .card .card-title {
+        font-size: 1.25rem;
+    }
+}

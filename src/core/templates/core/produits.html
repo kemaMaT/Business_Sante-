@@ -1,0 +1,15 @@
+<h2>Nos Produits</h2>
+<ul>
+    {% for produit in produits %}
+        <li>
+            <h3>{{ produit.nom }}</h3>
+            <p>Prix : {{ produit.prix }} €</p>
+            {% if produit.image %}
+                <img src="{{ produit.image.url }}" alt="{{ produit.nom }}" width="150">
+            {% endif %}
+            <br>
+            <a href="{% url 'ajouter_au_panier' produit.id %}">Ajouter au Panier</a>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'panier' %}">Voir mon Panier</a>

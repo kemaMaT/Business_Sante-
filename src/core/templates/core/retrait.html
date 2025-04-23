@@ -1,0 +1,41 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<style>
+    .container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+.btn {
+    display: inline-block;
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+</style>
+
+<h2>Retirer mes gains</h2>
+<p>Solde disponible : {{ profil.solde }} €</p>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="montant">Montant à retirer :</label>
+    <input type="number" name="montant" step="0.01" min="0" required>
+    <button type="submit">Retirer</button>
+</form>
+
+{% for message in messages %}
+<p style="color: red;">{{ message }}</p>
+{% endfor %}
+
+<h2>Demande de retrait</h2>
+<p>Fonctionnalité en construction... 😅</p>
+<a href="{% url 'home' %}">⬅ Retour</a>
+
+{% endblock %}

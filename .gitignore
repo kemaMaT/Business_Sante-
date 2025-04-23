@@ -1,0 +1,4 @@
+.venv
+src\AcademEase\settings.py
+.venv\Lib\site-packages
+src\business_sante\__pycache__

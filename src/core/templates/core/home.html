@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Business Santé — Développez votre business santé</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+    .hero {
+      background: url('/static/images/hero-bg.jpg') center/cover no-repeat;
+      color: #20ae13; text-align: center;
+      padding: 100px 20px;
+    }
+    .hero h1 { font-size: 3rem; font-weight: 600; margin-bottom: 20px; }
+    .hero p  { font-size: 1.25rem; margin-bottom: 30px; }
+    .hero .btn-hero {
+      background: #007bff; color: #fff;
+      padding: 0.75rem 2rem; border-radius: 6px;
+      font-size: 1.1rem; font-weight: 600;
+    }
+    .hero .btn-hero:hover { background: #0056b3; }
+    .hero .signup-link {
+      display: block; margin-top: 15px;
+      color: #3070e0; text-decoration: underline;
+    }
+
+    .features .icon { font-size: 2rem; color: #007bff; margin-bottom: 10px; }
+    .step .number {
+      font-size: 2rem; font-weight: 600;
+      width: 60px; height: 60px; margin: 0 auto 15px;
+      border-radius: 50%; background: #007bff;
+      color: #fff; display: flex;
+      align-items: center; justify-content: center;
+    }
+    .testimonial {
+      background: #f8f9fa; border-radius: 8px; padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .client-logos img { max-height: 40px; opacity: 0.6; margin: 0 15px; }
+
+    .faq h4 { margin-bottom: 1rem; }
+    .faq .accordion-button { font-weight: 500; }
+    .faq .accordion-body { font-size: 0.95rem; }
+
+    footer { background: #343a40; color: #adb5bd; padding: 40px 0; }
+    footer a { color: #adb5bd; text-decoration: none; }
+    footer a:hover { color: #fff; }
+
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>Boostez votre business santé</h1>
+      <p>Lancez votre boutique en ligne, augmentez vos ventes et fidélisez vos clients.</p>
+      <a href="/" class="btn btn-hero">Commencer</a>
+      <p class="mt-3">
+        Pas encore membre ?
+        <a href="/register/" class="signup-link">Devenir membre</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Logos de confiance -->
+  <section class="py-5 text-center client-logos">
+    <div class="container d-flex justify-content-center flex-wrap">
+      <img src="/static/images/logo1.png" alt="Logo client">
+      <img src="/static/images/logo2.png" alt="Logo client">
+      <img src="/static/images/logo3.png" alt="Logo client">
+      <img src="/static/images/logo4.png" alt="Logo client">
+    </div>
+  </section>
+
+  <!-- Fonctionnalités -->
+  <section class="py-5 features">
+    <div class="container">
+      <div class="row text-center g-4">
+        <div class="col-md-4">
+          <i class="fas fa-store icon"></i>
+          <h5>Création de boutique</h5>
+          <p>Personnalisez votre vitrine rapidement avec un éditeur intuitif.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-box-open icon"></i>
+          <h5>Gestion des produits</h5>
+          <p>Ajoutez, organisez et promouvez vos produits en quelques clics.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-wallet icon"></i>
+          <h5>Système de gains</h5>
+          <p>Récompensez clients et parrains grâce à un calcul automatique des commissions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 étapes -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4 step">
+          <div class="number">1</div>
+          <h6>S’inscrire</h6>
+          <p>Créez votre compte en moins de 2 minutes.</p>
+        </div>
+        <div class="col-md-4 step">
+          <div class="number">2</div>
+          <h6>Configurer</h6>
+          <p>Paramétrez vos produits et votre programme de parrainage.</p>
+        </div>
+        <div class="col-md-4 step">
+          <div class="number">3</div>
+          <h6>Vendre</h6>
+          <p>Commencez à recevoir des commandes et à accumuler des gains.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Témoignages -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h3 class="text-center mb-4">Ils ont réussi avec Business Santé</h3>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="testimonial">
+            <p>“Grâce à Business Santé, j’ai doublé mes ventes en un mois !”</p>
+            <strong>— Marie, fondatrice de Santé+</strong>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="testimonial">
+            <p>“Le système de parrainage a considérablement fidélisé mes clients.”</p>
+            <strong>— Ahmed, coach bien-être</strong>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="testimonial">
+            <p>“Interface simple, support réactif : tout y est !”</p>
+            <strong>— Sophie, naturopathe</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-5">
+    <div class="container faq">
+      <h3 class="mb-4 text-center">Foire aux questions</h3>
+      <div class="accordion" id="faqAccordion">
+        <!-- Question 1 -->
+        <div class="accordion-item">
+          <h4 class="accordion-header" id="faq1-heading">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="false">
+              Comment fonctionne le système de parrainage ?
+            </button>
+          </h4>
+          <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Chaque nouvel inscrit via votre code vous rapporte 10 % de ses achats, et vos filleuls bénéficient de 6 % de remise automatique.
+            </div>
+          </div>
+        </div>
+        <!-- Question 2 -->
+        <div class="accordion-item">
+          <h4 class="accordion-header" id="faq2-heading">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false">
+              Puis-je retirer mes gains à tout moment ?
+            </button>
+          </h4>
+          <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Oui, rendez-vous dans votre tableau de bord et cliquez sur “Demander un retrait”. Les fonds seront transférés sur votre compte sous 48 h.
+            </div>
+          </div>
+        </div>
+        <!-- Question 3 -->
+        <div class="accordion-item">
+          <h4 class="accordion-header" id="faq3-heading">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false">
+              Quel est le coût de l’abonnement ?
+            </button>
+          </h4>
+          <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Business Santé propose une version d’essai gratuite de 14 jours. Ensuite, l’abonnement mensuel débute à 29 € par mois, sans engagement.
+            </div>
+          </div>
+        </div>
+        <!-- Question 4 -->
+        <div class="accordion-item">
+          <h4 class="accordion-header" id="faq4-heading">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false">
+              Puis‑je personnaliser le design de ma boutique ?
+            </button>
+          </h4>
+          <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Absolument, vous avez accès à plusieurs thèmes gratuits et payants, et pouvez modifier les couleurs, polices et dispositions.
+            </div>
+          </div>
+        </div>
+        <!-- Question 5 -->
+        <div class="accordion-item">
+          <h4 class="accordion-header" id="faq5-heading">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5" aria-expanded="false">
+              Comment contacter le support ?
+            </button>
+          </h4>
+          <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Notre équipe support est joignable 24/7 via le chat intégré, email à support@businesssante.com ou téléphone au +33 1 23 45 67 89.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <h6>Business Santé</h6>
+          <p>Votre partenaire e‑commerce pour le secteur santé.</p>
+        </div>
+        <div class="col-md-2 mb-3">
+          <h6>Produit</h6>
+          <ul class="list-unstyled">
+            <li><a href="#">Fonctionnalités</a></li>
+            <li><a href="#">Tarifs</a></li>
+            <li><a href="#">Parrainage</a></li>
+          </ul>
+        </div>
+        <div class="col-md-2 mb-3">
+          <h6>Aide</h6>
+          <ul class="list-unstyled">
+            <li><a href="#">Support</a></li>
+            <li><a href="#">Docs</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-3">
+          <h6>Réseaux</h6>
+          <a href="#"><i class="fab fa-facebook fa-lg me-2"></i></a>
+          <a href="#"><i class="fab fa-instagram fa-lg me-2"></i></a>
+          <a href="#"><i class="fab fa-linkedin fa-lg"></i></a>
+        </div>
+      </div>
+      <div class="text-center pt-3">
+        &copy; 2025 Business Santé. Tous droits réservés.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
