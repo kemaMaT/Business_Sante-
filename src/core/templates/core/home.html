@@ -1,10 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Business Santé vous permet de transformer vos achats de soins naturels en source de revenu. Rejoignez le mouvement dès aujourd’hui pour 3000 FC.">
 
-  <title>Business Santé — Développez votre business santé</title>
+
+  <title>Business Santé — Gagnez de l’argent en prenant soin de votre corps</title>
+
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,13 +17,15 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
   <style>
-    body { font-family: 'Poppins', sans-serif; }
+    body { font-family: 'Poppins', sans-serif; background-color: rgb(173, 255, 255);}
     .hero {
       background: url('/static/images/hero-bg.jpg') center/cover no-repeat;
-      color: #20ae13; text-align: center;
+      color: #323232; text-align: center;
       padding: 100px 20px;
     }
-    .hero h1 { font-size: 3rem; font-weight: 600; margin-bottom: 20px; }
+    .hero h1 { font-size: 3rem; font-weight: 400; margin-bottom: 20px; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif}
+    .hero h1 p { font-size: 2rem; font-weight: 400; margin-bottom: 20px; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif}
+    
     .hero p  { font-size: 1.25rem; margin-bottom: 30px; }
     .hero .btn-hero {
       background: #007bff; color: #fff;
@@ -59,15 +65,21 @@
 </head>
 <body>
 
+  <!-- Logo + nom de marque -->
+  <div class="d-flex justify-content-center align-items-center py-4" style="gap: 15px;">
+    <img src="{% static 'images/logo-bs.png.png' %}" alt="Business Santé Logo" style="height: 60px;">
+    <h2 class="mb-0" style="font-weight: 600; color: #007bff;">Business Santé</h2>
+  </div>
+
   <!-- Hero -->
   <section class="hero">
     <div class="container">
-      <h1>Boostez votre business santé</h1>
-      <p>Lancez votre boutique en ligne, augmentez vos ventes et fidélisez vos clients.</p>
+      <h1> Commencez aujourd’hui<p style="font-size: 3rem;  font-weight: 700;">avec 3000 FC seulement,<p>et bâtissez un avenir plus sain et plus rentable.</p></h1>
+      <p>Avec Business Santé, Investissez dans votre bien-être, récoltez des revenus.”</p>
       <a href="/" class="btn btn-hero">Commencer</a>
       <p class="mt-3">
         Pas encore membre ?
-        <a href="/register/" class="signup-link">Devenir membre</a>
+        <a href="/register/" class="signup-link">Je deviens membre</a>
       </p>
     </div>
   </section>
@@ -82,51 +94,66 @@
     </div>
   </section>
 
-  <!-- Fonctionnalités -->
-  <section class="py-5 features">
+  <section class="py-5 text-center bg-light">
     <div class="container">
-      <div class="row text-center g-4">
-        <div class="col-md-4">
-          <i class="fas fa-store icon"></i>
-          <h5>Création de boutique</h5>
-          <p>Personnalisez votre vitrine rapidement avec un éditeur intuitif.</p>
-        </div>
-        <div class="col-md-4">
-          <i class="fas fa-box-open icon"></i>
-          <h5>Gestion des produits</h5>
-          <p>Ajoutez, organisez et promouvez vos produits en quelques clics.</p>
-        </div>
-        <div class="col-md-4">
-          <i class="fas fa-wallet icon"></i>
-          <h5>Système de gains</h5>
-          <p>Récompensez clients et parrains grâce à un calcul automatique des commissions.</p>
-        </div>
-      </div>
+      <h2 class="mb-3">Business Santé : Consommez mieux, vivez mieux, gagnez plus</h2>
+      <p class="lead">
+        Nous avons une mission : améliorer la santé physique et financière du peuple congolais. Grâce à nos produits naturels GC et Bimangu,
+        vous prenez soin de votre corps tout en transformant vos achats en revenus mensuels. Avec seulement 3000 FC, vous rejoignez un
+        réseau qui récompense votre consommation et celle de vos proches. Santé, beauté, argent — tout commence ici.
+      </p>
+      <a href="/register" class="btn btn-hero">Rejoindre Business Santé</a>
     </div>
   </section>
+  
 
-  <!-- 3 étapes -->
-  <section class="py-5">
-    <div class="container">
-      <div class="row g-4">
-        <div class="col-md-4 step">
-          <div class="number">1</div>
-          <h6>S’inscrire</h6>
-          <p>Créez votre compte en moins de 2 minutes.</p>
-        </div>
-        <div class="col-md-4 step">
-          <div class="number">2</div>
-          <h6>Configurer</h6>
-          <p>Paramétrez vos produits et votre programme de parrainage.</p>
-        </div>
-        <div class="col-md-4 step">
-          <div class="number">3</div>
-          <h6>Vendre</h6>
-          <p>Commencez à recevoir des commandes et à accumuler des gains.</p>
-        </div>
+  <!-- Fonctionnalités -->
+<section class="py-5 features">
+  <div class="container">
+    <div class="row text-center g-4">
+      <div class="col-md-4">
+        <i class="fas fa-heartbeat icon"></i>
+        <h5>Santé et Beauté Naturelle</h5>
+        <p>Découvrez les bienfaits de la gamme GC pour la peau et les cheveux, et de Bimangu, une boisson thérapeutique 100% naturelle.</p>
+      </div>
+      <div class="col-md-4">
+        <i class="fas fa-hand-holding-usd icon"></i>
+        <h5>Revenus à partir de votre consommation</h5>
+        <p>Gagnez jusqu’à 6% sur vos propres achats et jusqu’à 24% sur ceux de vos filleuls. Oui, votre santé peut aussi vous enrichir !</p>
+      </div>
+      <div class="col-md-4">
+        <i class="fas fa-network-wired icon"></i>
+        <h5>Parrainage intelligent</h5>
+        <p>Bénéficiez d’un système de gains répartis sur 3 niveaux. Plus votre réseau grandit, plus vos revenus augmentent.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+<!-- 3 étapes -->
+<section class="py-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4 step">
+        <div class="number">1</div>
+        <h6>Adhérez à Business Santé</h6>
+        <p>Rejoignez le mouvement pour seulement 3000 FC et commencez votre parcours vers une vie plus saine et plus rentable.</p>
+      </div>
+      <div class="col-md-4 step">
+        <div class="number">2</div>
+        <h6>Commandez vos produits</h6>
+        <p>Profitez de nos soins GC et de la boisson Bimangu. Devenez distributeur agréé avec une commande à partir de 100 $.</p>
+      </div>
+      <div class="col-md-4 step">
+        <div class="number">3</div>
+        <h6>Gagnez et faites gagner</h6>
+        <p>Recommandez Business Santé à vos proches, développez votre réseau et touchez des commissions sur leurs achats.</p>
+      </div>
+      <a href="/register" class="btn btn-hero">Je deviens membre</a>
+    </div>
+  </div>
+</section>
+
 
   <!-- Témoignages -->
   <section class="py-5 bg-light">
@@ -169,7 +196,7 @@
           </h4>
           <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
             <div class="accordion-body">
-              Chaque nouvel inscrit via votre code vous rapporte 10 % de ses achats, et vos filleuls bénéficient de 6 % de remise automatique.
+              Chaque personne que vous parrainez vous rapporte jusqu’à 10 % de ses achats. Vous touchez aussi 8 % sur les filleuls de vos filleuls, et 6 % sur une 3ᵉ génération. Plus votre réseau grandit, plus vos revenus augmentent.
             </div>
           </div>
         </div>
@@ -177,12 +204,16 @@
         <div class="accordion-item">
           <h4 class="accordion-header" id="faq2-heading">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false">
-              Puis-je retirer mes gains à tout moment ?
+              Quels sont les produits proposés par Business Santé ?
             </button>
           </h4>
           <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
             <div class="accordion-body">
-              Oui, rendez-vous dans votre tableau de bord et cliquez sur “Demander un retrait”. Les fonds seront transférés sur votre compte sous 48 h.
+              Nous distribuons deux gammes phares :
+
+GC : des soins naturels pour la peau et les cheveux.
+
+Bimangu : une boisson thérapeutique à base d’ingrédients 100% naturels, qui revitalise l’organisme.
             </div>
           </div>
         </div>
@@ -190,12 +221,12 @@
         <div class="accordion-item">
           <h4 class="accordion-header" id="faq3-heading">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false">
-              Quel est le coût de l’abonnement ?
+              Puis-je vraiment gagner de l’argent en consommant ?
             </button>
           </h4>
           <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
             <div class="accordion-body">
-              Business Santé propose une version d’essai gratuite de 14 jours. Ensuite, l’abonnement mensuel débute à 29 € par mois, sans engagement.
+              Oui ! Vous gagnez 6 % sur vos propres achats. Et si vous parrainez d’autres personnes, vous touchez des commissions sur leurs commandes. C’est une consommation intelligente qui devient une source de revenus durable.
             </div>
           </div>
         </div>
@@ -203,12 +234,12 @@
         <div class="accordion-item">
           <h4 class="accordion-header" id="faq4-heading">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false">
-              Puis‑je personnaliser le design de ma boutique ?
+              Combien coûte l’adhésion au programme ?
             </button>
           </h4>
           <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
             <div class="accordion-body">
-              Absolument, vous avez accès à plusieurs thèmes gratuits et payants, et pouvez modifier les couleurs, polices et dispositions.
+              L’adhésion au programme est à 3000 FC seulement. Vous pouvez ensuite commander des produits à partir de 100 $ pour devenir distributeur agréé et bénéficier d’une remise de 10 %.
             </div>
           </div>
         </div>

@@ -116,8 +116,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -132,6 +130,9 @@ LOGOUT_REDIRECT_URL = '/'  # Quand il se déconnecte, redirige vers la page de l
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
     ]
+
+STATIC_URL = '/static/'
+
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # Crée un dossier 'staticfiles' à la racine du projet
 STATICFILES_DIRS = [
