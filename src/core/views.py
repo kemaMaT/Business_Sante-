@@ -14,11 +14,10 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect("home")
+            return redirect("start")
     else:
         form = RegisterForm()
     return render(request, "core/register.html", {"form": form})
-
 
 @login_required
 def home(request):
@@ -37,7 +36,7 @@ def home(request):
         'achats': achats,
     }
 
-    return render(request, 'core/home.html', context)
+    return render(request, 'core/start.html', context)
 
 @login_required
 def demander_retrait(request):
@@ -47,6 +46,9 @@ def demander_retrait(request):
 @login_required
 def profile(request):
     return render(request, 'core/profile.html')
+
+def start(request):
+    return render(request, 'core/home.html')
 
 def produits_list(request):
     produits = Produit.objects.all()
@@ -136,3 +138,9 @@ def retirer_gains(request):
             messages.success(request, f"Vous avez retiré {montant} € avec succès.")
 
     return render(request, "core/retrait.html", {"profil": profil})
+
+def cgu(request):
+    return render(request, 'core/cgu.html')
+
+def cgv(request):
+    return render(request, 'core/cgv.html')

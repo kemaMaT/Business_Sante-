@@ -6,9 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Business Santé vous permet de transformer vos achats de soins naturels en source de revenu. Rejoignez le mouvement dès aujourd’hui pour 3000 FC.">
 
-
   <title>Business Santé — Gagnez de l’argent en prenant soin de votre corps</title>
-
+  <link rel="icon" type="image/png" href="{% static 'images/logo-bs.png.png' %}">
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,32 +16,61 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
   <style>
-    body { font-family: 'Poppins', sans-serif; background-color: rgb(173, 255, 255);}
+    body { font-family: 'Poppins', sans-serif; 
+    background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,51,102,0.6), rgba(0,128,0,0.6));
+    
+  }
     .hero {
-      background: url('/static/images/hero-bg.jpg') center/cover no-repeat;
+      background: url('/static/images/logo2.jpg') center/cover no-repeat;
       color: #323232; text-align: center;
       padding: 100px 20px;
+      
     }
-    .hero h1 { font-size: 3rem; font-weight: 400; margin-bottom: 20px; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif}
-    .hero h1 p { font-size: 2rem; font-weight: 400; margin-bottom: 20px; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif}
+    .hero h2 { font-size: 2rem; font-weight: 200; margin-bottom: 1px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;}
+    .hero h1 { font-size: 2.5rem; font-weight: 400; margin-bottom: 20px; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;}
     
-    .hero p  { font-size: 1.25rem; margin-bottom: 30px; }
+    .hero p  { font-size: 1.25rem; margin-bottom: 2px; }
     .hero .btn-hero {
-      background: #007bff; color: #fff;
-      padding: 0.75rem 2rem; border-radius: 6px;
-      font-size: 1.1rem; font-weight: 600;
+      
+      background:#c2def9 ;
+      padding: 0.75rem 2rem; border-radius: 26px;
+      font-size: 2.1rem; font-weight: 600;
+      color: #161616;
+  
     }
-    .hero .btn-hero:hover { background: #0056b3; }
+    .hero .btn-hero:hover { background: #41c594; color:#fff}
     .hero .signup-link {
       display: block; margin-top: 15px;
       color: #3070e0; text-decoration: underline;
     }
+    .hero .signup-link:hover {
+      display: block; margin-top: 15px;
+      color: #30e0a2; text-decoration: underline;
+    }
 
-    .features .icon { font-size: 2rem; color: #007bff; margin-bottom: 10px; }
+    .btn-hero {
+  background: #0564d1;
+  color: #fff;
+  padding: 0.75rem 2rem;
+  border-radius: 16px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.btn-hero:hover {
+  background: #41c594;
+  color: #fff;
+}
+
+
+    .features .icon { font-size: 2rem; color: #0564d1; margin-bottom: 10px; }
     .step .number {
       font-size: 2rem; font-weight: 600;
       width: 60px; height: 60px; margin: 0 auto 15px;
-      border-radius: 50%; background: #007bff;
+      border-radius: 50%; background:#30e0a2;
       color: #fff; display: flex;
       align-items: center; justify-content: center;
     }
@@ -51,79 +79,144 @@
       margin-bottom: 20px;
     }
 
-    .client-logos img { max-height: 40px; opacity: 0.6; margin: 0 15px; }
-
     .faq h4 { margin-bottom: 1rem; }
     .faq .accordion-button { font-weight: 500; }
-    .faq .accordion-body { font-size: 0.95rem; }
+    .faq .accordion-body { font-size: 0.95rem; color: #6e6e6e;}
 
     footer { background: #343a40; color: #adb5bd; padding: 40px 0; }
     footer a { color: #adb5bd; text-decoration: none; }
     footer a:hover { color: #fff; }
+  </style>
+
+  <style>
+.logo-header {
+  z-index: 3;
+  background: linear-gradient(135deg, #000000, #376da3, #3ca63c); /* Couleurs opaques */
+  height: 80px;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+ 
+
+@keyframes fadeInTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logo-header .fade-in {
+  animation: fadeInTop 1s ease-out forwards;
+}
+
+    .hero-bg { 
+  background-image: url("https://cdn.pixabay.com/photo/2017/02/20/12/59/money-2082383_1280.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 50px 0;
+  color: white;
+  position: relative;
+  overflow: hidden;  
+  background-color: rgb(215, 239, 227);
+
+}
+
+.hero-bg .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2); /* Couche sombre */
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+
+.hero-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* pour un effet sombre sur l'image */
+  z-index: 1;
+}
+
+.hero-bg .container {
+  position: relative;
+  z-index: 2;
+}
 
   </style>
 </head>
+
 <body>
-
-  <!-- Logo + nom de marque -->
-  <div class="d-flex justify-content-center align-items-center py-4" style="gap: 15px;">
-    <img src="{% static 'images/logo-bs.png.png' %}" alt="Business Santé Logo" style="height: 60px;">
-    <h2 class="mb-0" style="font-weight: 600; color: #007bff;">Business Santé</h2>
+<!-- Logo + nom de marque -->
+<header class="logo-header text-center py-3">
+  <div class="d-flex justify-content-center align-items-center gap-3 fade-in" style="gap: 15px;">
+    <img src="{% static 'images/logo4.png' %}" alt="Business Santé Logo" style=" height: 80px;">
+    <h2 class="mb-0" style="font-weight: 900; color: #ffffff;">Business Santé</h2>
   </div>
+</header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container">
-      <h1> Commencez aujourd’hui<p style="font-size: 3rem;  font-weight: 700;">avec 3000 FC seulement,<p>et bâtissez un avenir plus sain et plus rentable.</p></h1>
-      <p>Avec Business Santé, Investissez dans votre bien-être, récoltez des revenus.”</p>
-      <a href="/" class="btn btn-hero">Commencer</a>
-      <p class="mt-3">
-        Pas encore membre ?
-        <a href="/register/" class="signup-link">Je deviens membre</a>
-      </p>
-    </div>
-  </section>
-
-  <!-- Logos de confiance -->
-  <section class="py-5 text-center client-logos">
-    <div class="container d-flex justify-content-center flex-wrap">
-      <img src="/static/images/logo1.png" alt="Logo client">
-      <img src="/static/images/logo2.png" alt="Logo client">
-      <img src="/static/images/logo3.png" alt="Logo client">
-      <img src="/static/images/logo4.png" alt="Logo client">
-    </div>
-  </section>
-
+<!-- Hero -->
+<section class="hero hero-bg">
+  <div class="overlay"></div> <!-- Overlay sombre -->
+  <div class="container text-center text-white hero-content">
+    <h2>Commencez Aujourd’hui avec <b><i>3000FC</i></b> Seulement, et </h2><h3 style="font-weight: 600; font-size: 3.5rem; ">BATISSEZ UN AVENIR SAIN ET RENTABLE.</h3>
+    <a href="/" class="btn btn-hero">COMMENCER</a>
+    <p class="mt-3 d-flex justify-content-center align-items-center gap-2">
+      Pas encore membre ?
+      <a href="/register/" class="signup-link">Je deviens membre</a>
+    </p>
+    <p style="font-size: 1.50rem; font-weight: 200; margin-bottom: 5px; font-family:Arial, Helvetica, sans-serif">
+      Avec Business Santé, Investissez dans votre bien-être, récoltez des revenus.
+    </p>
+  </div>
+</section>
+ <!-- BS -->
   <section class="py-5 text-center bg-light">
     <div class="container">
-      <h2 class="mb-3">Business Santé : Consommez mieux, vivez mieux, gagnez plus</h2>
+      <h2 class="mb-3">Business Santé : <b>Consommez mieux, vivez mieux, gagnez plus</b></h2>
       <p class="lead">
-        Nous avons une mission : améliorer la santé physique et financière du peuple congolais. Grâce à nos produits naturels GC et Bimangu,
-        vous prenez soin de votre corps tout en transformant vos achats en revenus mensuels. Avec seulement 3000 FC, vous rejoignez un
-        réseau qui récompense votre consommation et celle de vos proches. Santé, beauté, argent — tout commence ici.
+        Nous avons une mission : <b style="font-weight: 600;">Améliorer</b> la santé physique et financière du peuple congolais. Grâce à nos produits naturels GC et Bimangu,
+        vous prenez soin de votre corps tout en transformant vos achats en revenus mensuels. <b style="font-weight: 600;">Avec seulement 3000 FC</b>, vous rejoignez un
+        réseau qui récompense votre consommation et celle de vos proches. Santé, beauté, argent —  <b style="font-weight: 600;">tout commence ici.</b>
       </p>
-      <a href="/register" class="btn btn-hero">Rejoindre Business Santé</a>
+      <a href="/register" class="btn btn-hero" >REJOINDRE BUSINESS SANTÉ</a>
     </div>
   </section>
-  
 
   <!-- Fonctionnalités -->
-<section class="py-5 features">
+<section class="py-5 features" style="background-color: rgb(215, 239, 227);">
   <div class="container">
     <div class="row text-center g-4">
       <div class="col-md-4">
         <i class="fas fa-heartbeat icon"></i>
-        <h5>Santé et Beauté Naturelle</h5>
+        <h5><b>Santé et Beauté Naturelle</b></h5>
         <p>Découvrez les bienfaits de la gamme GC pour la peau et les cheveux, et de Bimangu, une boisson thérapeutique 100% naturelle.</p>
       </div>
       <div class="col-md-4">
         <i class="fas fa-hand-holding-usd icon"></i>
-        <h5>Revenus à partir de votre consommation</h5>
+        <h5><b>Revenus à partir de votre consommation</b></h5>
         <p>Gagnez jusqu’à 6% sur vos propres achats et jusqu’à 24% sur ceux de vos filleuls. Oui, votre santé peut aussi vous enrichir !</p>
       </div>
       <div class="col-md-4">
         <i class="fas fa-network-wired icon"></i>
-        <h5>Parrainage intelligent</h5>
+        <h5><b>Parrainage intelligent</b></h5>
         <p>Bénéficiez d’un système de gains répartis sur 3 niveaux. Plus votre réseau grandit, plus vos revenus augmentent.</p>
       </div>
     </div>
@@ -136,22 +229,25 @@
     <div class="row g-4">
       <div class="col-md-4 step">
         <div class="number">1</div>
-        <h6>Adhérez à Business Santé</h6>
+        <h4><b>Adhérez à Business Santé</b></h4>
         <p>Rejoignez le mouvement pour seulement 3000 FC et commencez votre parcours vers une vie plus saine et plus rentable.</p>
       </div>
       <div class="col-md-4 step">
         <div class="number">2</div>
-        <h6>Commandez vos produits</h6>
+        <h4><b>Commandez vos produits</b></h4>
         <p>Profitez de nos soins GC et de la boisson Bimangu. Devenez distributeur agréé avec une commande à partir de 100 $.</p>
       </div>
       <div class="col-md-4 step">
         <div class="number">3</div>
-        <h6>Gagnez et faites gagner</h6>
+        <h4><b>Gagnez et faites gagner</b></h4>
         <p>Recommandez Business Santé à vos proches, développez votre réseau et touchez des commissions sur leurs achats.</p>
+      </div> 
+      <!-- BOUTON CENTRÉ ET AJUSTÉ -->
+      <div class="col-12 text-center mt-4">
+        <a href="/register" class="btn btn-hero">Je deviens membre</a>
       </div>
-      <a href="/register" class="btn btn-hero">Je deviens membre</a>
-    </div>
-  </div>
+    </div> 
+  </div> 
 </section>
 
 
@@ -185,7 +281,7 @@
   <!-- FAQ -->
   <section class="py-5">
     <div class="container faq">
-      <h3 class="mb-4 text-center">Foire aux questions</h3>
+      <h1 class="mb-4 text-center">Foire aux questions</h1>
       <div class="accordion" id="faqAccordion">
         <!-- Question 1 -->
         <div class="accordion-item">
@@ -266,22 +362,14 @@ Bimangu : une boisson thérapeutique à base d’ingrédients 100% naturels, qui
       <div class="row">
         <div class="col-md-4 mb-3">
           <h6>Business Santé</h6>
-          <p>Votre partenaire e‑commerce pour le secteur santé.</p>
+          <p>Investissez dans votre santé, créez des opportunités, et inspirez votre entourage avec Business Santé — là où bien-être et réussite se rencontrent.</p>
         </div>
-        <div class="col-md-2 mb-3">
-          <h6>Produit</h6>
-          <ul class="list-unstyled">
-            <li><a href="#">Fonctionnalités</a></li>
-            <li><a href="#">Tarifs</a></li>
-            <li><a href="#">Parrainage</a></li>
-          </ul>
-        </div>
+        
         <div class="col-md-2 mb-3">
           <h6>Aide</h6>
           <ul class="list-unstyled">
-            <li><a href="#">Support</a></li>
-            <li><a href="#">Docs</a></li>
-            <li><a href="#">FAQ</a></li>
+            <li><a href="{% url 'cgu' %}">CONDITIONS GENERALES D’UTILISATION</a></li>
+            <li><a href="{% url 'cgv' %}">CONDITIONS GENERALES DE VENTE DES SERVICES ET PRODUITS</a></li>
           </ul>
         </div>
         <div class="col-md-4 mb-3">

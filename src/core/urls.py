@@ -14,6 +14,12 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('profile/', views.profile, name='profile'),
     path('retrait/', views.demander_retrait, name='demander_retrait'),
+    path('start/', views.start, name='start'),
+
+    path('cgu/', views.cgu, name='cgu'),
+    path('cgv/', views.cgv, name='cgv'),
+   
+
 
     
 ]
