@@ -4,10 +4,11 @@ from .models import CustomUser
 
 class RegisterForm(UserCreationForm):
     parrain_code = forms.CharField(required=False, label="Code de Parrainage")
+    phone_number = forms.CharField(max_length=20, required=True)
 
     class Meta:
         model = CustomUser
-        fields = ["username", "email", "password1", "password2", "parrain_code"]
+        fields = ["username", "email",'phone_number', "password1", "password2", "parrain_code"]
 
     def save(self, commit=True):
         user = super().save(commit=False)

@@ -6,6 +6,7 @@ from .forms import RegisterForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from decimal import Decimal
+from django.core.mail import send_mail
 
 
 def register(request):
@@ -13,8 +14,13 @@ def register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            return redirect("start")
+            phone_number = form.cleaned_data.get('phone_number')
+            profil, created = Profil.objects.get_or_create(utilisateur=user, defaults={'telephone': phone_number})
+
+            # Envoi email de confirmation
+            
+            return redirect('payment')  # redirection vers la page de paiement
+           
     else:
         form = RegisterForm()
     return render(request, "core/register.html", {"form": form})
@@ -144,3 +150,6 @@ def cgu(request):
 
 def cgv(request):
     return render(request, 'core/cgv.html')
+
+def payment(request):
+    return render(request, 'core/payment_page.html')

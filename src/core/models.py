@@ -35,7 +35,10 @@ class Profil(models.Model):
     parrain = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="filleuls")
     solde = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     gains_retires = models.DecimalField(max_digits=10, decimal_places=2, default=0)  # Nouveau champ
-
+    telephone = models.CharField(max_length=20, blank=True)
+    parrain_code = models.CharField(max_length=20, blank=True)
+    is_paid = models.BooleanField(default=False)  # pour vérifier le paiement
+    
     def __str__(self):
         return self.utilisateur.username
 

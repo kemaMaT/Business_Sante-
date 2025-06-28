@@ -18,6 +18,7 @@ urlpatterns = [
 
     path('cgu/', views.cgu, name='cgu'),
     path('cgv/', views.cgv, name='cgv'),
+    path('payment/', views.payment, name='payment'),
    
 
 

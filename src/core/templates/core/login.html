@@ -1,98 +1,293 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Connexion — Business Santé</title>
-
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Font Awesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-
-  <!-- Styles personnalisés -->
+  <link rel="icon" type="image/png" href="{% static 'images/logo-bs.png.png' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #6dd5ed, #2193b0);
-      height: 100vh;
-      margin: 0;
+    html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(145deg, #e0f7fa, #b2ebf2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overflow: hidden;
+  }
+
+  body::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background-size: contain;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 1;
+    background: url("{% static 'images/logo2.jpeg' %}");
+  }
+
+  .container-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+    max-width: 1200px;
+    padding: 2rem;
+    z-index: 2;
+    position: relative;
+  }
+
+  .left-text {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    max-width: 600px;
+  }
+
+   .left-text p {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #004d40;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      
+    }
+
+
+  .login-section {
+    flex: 1 1 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    min-width: 300px;
+  }
+
+  .login-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 100%;
+    max-width: 420px;
+    animation: fadeIn 0.6s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    margin: auto; /* Important pour un bon centrage avec contenu dynamique */
+  }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-    .login-card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 25px rgba(0,0,0,0.1);
-      padding: 2rem;
-      max-width: 400px;
-      width: 100%;
-    }
-    .login-card h2 {
       margin-bottom: 1.5rem;
+      gap: 12px;
+    }
+
+    .logo img {
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .brand-title {
+      font-weight: 200;
+      font-size: 1.25rem;
+      color: #000;
+      margin: 0;
+    }
+
+    h2 {
+      text-align: center;
       font-weight: 600;
       color: #333;
-      text-align: center;
+      margin-bottom: 1.5rem;
     }
-    .form-control {
-      border-radius: 8px;
-      padding: 0.75rem 1rem;
+
+    .form-label {
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 0.3rem;
+    }
+
+    .input-group {
+      background-color: #f5f5f5;
+      border-radius: 20px;
       border: 1px solid #ddd;
-      transition: border-color 0.2s;
+      padding: 0.3rem 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.2rem;
     }
-    .form-control:focus {
-      border-color: #2193b0;
-      box-shadow: none;
+
+    .input-group-text {
+      background: none;
+      border: none;
+      padding: 0;
+      color: #007c91;
+      font-size: 1.2rem;
     }
+
+    .form-control {
+      border: none !important;
+      box-shadow: none !important;
+      outline: none !important;
+      background-color: transparent;
+      font-size: 1rem;
+      flex: 1;
+    }
+
     .btn-login {
-      background: #2193b0;
+      background: #007c91;
       color: #fff;
-      border-radius: 8px;
-      padding: 0.75rem;
-      width: 100%;
       font-weight: 600;
-      transition: background 0.2s;
+      padding: 0.75rem;
+      border-radius: 10px;
+      border: none;
+      transition: background 0.3s;
+      font-size: 1rem;
     }
+
     .btn-login:hover {
-      background: #197a94;
+      background: #005e6a;
     }
+
     .text-center a {
-      color: #2193b0;
+      color: #007c91;
       text-decoration: none;
     }
+
     .text-center a:hover {
       text-decoration: underline;
     }
+
+    @media (max-width: 768px) {
+      .container-flex {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem;
+      }
+
+      .left-text {
+        text-align: center;
+        padding: 1rem;
+      }
+
+      .left-text p {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+  
+  <style>
+    .login-card-header {
+      background-color: #007c91;
+      padding: 0.5rem;
+      text-align: center;
+      color: #fff;
+    }
+
+    .login-card-header img {
+      height: 50px;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-card-header h2 {
+      font-weight: 600;
+      font-size: 1.6rem;
+      margin: 0;
+    }
+
+     .lottie-player {
+  max-width: 250px;
+  height: auto;
+  }
+
+   .left-text lottie-player {
+  display: inline-block; /* Nécessaire pour que le centrage fonctionne */
+  margin: 1rem auto; /* Pour un espacement vertical aussi */
+  max-width: 100%; /* Pour l’adaptation mobile */
+}
+
+    
   </style>
 </head>
 <body>
+  <div class="container-flex">
+    <div class="left-text">
+      <p>
+        Recommandez Business Santé à vos proches, 
+        développez votre réseau et touchez des commissions sur leurs achats.
+      </p>
 
-  <div class="login-card">
-    <h2><i class="fas fa-user-circle me-2"></i>Connexion</h2>
-    <form method="post" action="{% url 'login' %}">
-      {% csrf_token %}
-      <div class="mb-3">
-        <label for="id_username" class="form-label">Nom d’utilisateur</label>
-        <input type="text" name="username" class="form-control" id="id_username" placeholder="Votre nom d’utilisateur" required>
+      <!-- Animation entre top et middle -->
+  <lottie-player
+    src="https://lottie.host/2deb2967-3d71-4d19-aacd-d4a1c7837af9/lmXUijFQTw.json"
+    background="transparent"
+    speed="1"
+    style="width: 800px !important; height: 200px; margin: 0 auto;"
+    loop
+    autoplay>
+  </lottie-player>
+    </div>
+
+    <div class="login-section">
+      <div class="login-card">
+        <div class="login-card-header">
+        <img src="{% static 'images/logo2.jpeg' %}" alt="Business Santé Logo">
+        <h2><i class="fas fa-sign-in-alt me-2"></i>Connexion</h2>
       </div>
-      <div class="mb-3">
-        <label for="id_password" class="form-label">Mot de passe</label>
-        <input type="password" name="password" class="form-control" id="id_password" placeholder="••••••••" required>
+
+        <form method="post" action="{% url 'login' %}">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label for="id_username" class="form-label">Nom d’utilisateur</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+              <input type="text" name="username" class="form-control" id="id_username" placeholder="Entrez votre nom" required>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="id_password" class="form-label">Mot de passe</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-lock"></i></span>
+              <input type="password" name="password" class="form-control" id="id_password" placeholder="••••••••" required>
+            </div>
+          </div>
+
+          <div class="d-grid mb-3">
+            <button type="submit" class="btn btn-login">Se connecter</button>
+          </div>
+
+          <div class="text-center">
+            <p>Pas encore membre ? <a href="{% url 'register' %}">Devenir membre</a></p>
+          </div>
+        </form>
       </div>
-      <div class="d-grid mb-3">
-        <button type="submit" class="btn btn-login">Se connecter</button>
-      </div>
-      <div class="text-center">
-        <p>Pas de compte ? <a href="{% url 'register' %}">S’inscrire</a></p>
-      </div>
-    </form>
+    </div>
   </div>
-
 </body>
 </html>
