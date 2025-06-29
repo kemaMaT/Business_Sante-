@@ -19,6 +19,11 @@ urlpatterns = [
     path('cgu/', views.cgu, name='cgu'),
     path('cgv/', views.cgv, name='cgv'),
     path('payment/', views.payment, name='payment'),
+    path('solde/', views.solde, name='solde'),
+    path('filleuls/', views.mes_filleuls_view, name='filleuls'),
+    path('gains/', views.mes_gains_view, name='gains'),
+
+   
    
 
 

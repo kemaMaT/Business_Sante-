@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h2><i class="fas fa-coins me-2"></i>Mes Gains</h2>
+
+<div class="row">
+  <div class="col-md-3">
+    <div class="card bg-success text-white mb-3">
+      <div class="card-body">
+        <h6>Gains personnels (6%)</h6>
+        <p class="display-6">{{ gain_propre|floatformat:2 }} FCFA</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-primary text-white mb-3">
+      <div class="card-body">
+        <h6>1ère génération (10%)</h6>
+        <p class="display-6">{{ gain_1|floatformat:2 }} FCFA</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-info text-white mb-3">
+      <div class="card-body">
+        <h6>2ème génération (8%)</h6>
+        <p class="display-6">{{ gain_2|floatformat:2 }} FCFA</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-dark text-white mb-3">
+      <div class="card-body">
+        <h6>3ème génération (6%)</h6>
+        <p class="display-6">{{ gain_3|floatformat:2 }} FCFA</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mt-4">
+  <div class="card-body">
+    <h4>Total des gains : {{ total_gains|floatformat:2 }} FCFA</h4>
+  </div>
+</div>
+
+{% endblock %}

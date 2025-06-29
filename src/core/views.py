@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 
-from .models import Produit, Panier, Profil,Parrainage
+from .models import Produit, Panier, Profil,Parrainage, Achat
 from .forms import RegisterForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -153,3 +153,58 @@ def cgv(request):
 
 def payment(request):
     return render(request, 'core/payment_page.html')
+
+@login_required
+def solde(request):
+    try:
+        profil = Profil.objects.get(utilisateur=request.user)
+        solde = profil.solde
+    except Profil.DoesNotExist:
+        solde = 0  # ou None selon ton modèle
+
+    return render(request, 'core/solde.html', {'solde': solde})
+
+@login_required
+def mes_filleuls_view(request):
+    filleuls = Profil.objects.filter(parrain=request.user)
+    return render(request, 'core/mes_filleuls.html', {'filleuls': filleuls})
+
+@login_required
+def mes_gains_view(request):
+    user = request.user
+
+    # Gains sur ses propres achats (6%)
+    mes_achats = Achat.objects.filter(utilisateur=user)
+    gain_propre = sum([achat.montant * 0.06 for achat in mes_achats])
+
+    # Filleuls de 1ère génération
+    filleuls_1 = Profil.objects.filter(parrain=user).values_list('utilisateur', flat=True)
+    achats_1 = Achat.objects.filter(utilisateur__in=filleuls_1)
+    gain_1 = sum([achat.montant * 0.10 for achat in achats_1])
+
+    # 2ème génération (filleuls de ses filleuls)
+    filleuls_2 = Profil.objects.filter(parrain__in=filleuls_1).values_list('utilisateur', flat=True)
+    achats_2 = Achat.objects.filter(utilisateur__in=filleuls_2)
+    gain_2 = sum([achat.montant * 0.08 for achat in achats_2])
+
+    # 3ème génération (filleuls des filleuls de ses filleuls)
+    filleuls_3 = Profil.objects.filter(parrain__in=filleuls_2).values_list('utilisateur', flat=True)
+    achats_3 = Achat.objects.filter(utilisateur__in=filleuls_3)
+    gain_3 = sum([achat.montant * 0.06 for achat in achats_3])
+
+    gain_parrain = gain_1 + gain_2 + gain_3
+    total_gains = gain_propre + gain_parrain
+
+    context = {
+        'gain_propre': gain_propre,
+        'gain_1': gain_1,
+        'gain_2': gain_2,
+        'gain_3': gain_3,
+        'gain_parrain': gain_parrain,
+        'total_gains': total_gains,
+        'mes_achats': mes_achats,
+        'achats_1': achats_1,
+        'achats_2': achats_2,
+        'achats_3': achats_3,
+    }
+    return render(request, 'core/mes_gains.html', context)

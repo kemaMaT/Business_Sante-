@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card text-white h-100 border-0 position-relative rounded-4 overflow-hidden">
+        <div class="position-absolute top-0 start-0 w-100 h-100 "></div>
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50 z-1"></div>
+        <div class="card-body position-relative z-2 d-flex flex-column justify-content-between h-100">
+          <div>
+            <h3 class="card-title fw-semibold"><i class="fas fa-wallet me-2"></i>Solde disponible</h3>
+            <p class="display-6">{{ solde }} FCFA</p>
+          </div>
+          <a href="#" class="btn btn-light btn-sm mt-3">Voir détails</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
