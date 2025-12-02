@@ -1,7 +1,92 @@
 {% extends 'core/base.html' %}
-{% block title %}Profil{% endblock %}
+{% load static %}
+{% block title %}Mon Profil{% endblock %}
+
 {% block content %}
-    <h2>Page de profil</h2>
-    <p>Nom d'utilisateur : {{ user.username }}</p>
-    <p>Email : {{ user.email }}</p>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header text-white text-center py-4" style="background: linear-gradient(135deg, #0d47a1, #1976d2);">
+          <h3 class="mb-0"><i class="fas fa-user-circle me-2"></i>Mon Profil</h3>
+        </div>
+
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center mb-3">
+            <img src="{% static 'images/avatar.png' %}" alt="Avatar" class="rounded-circle me-3" width="70" height="70">
+            <div>
+              <h5 class="mb-0">{{ user.username }}</h5>
+              <small class="text-muted">{{ user.email }}</small>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row mb-3">
+            <div class="col-6">
+              <p class="mb-1 text-muted"><i class="fas fa-phone me-2"></i>Téléphone</p>
+              <p class="fw-semibold">{{ profil.telephone|default:"—" }}</p>
+            </div>
+            <div class="col-6 text-end">
+              <p class="mb-1 text-muted"><i class="fas fa-wallet me-2"></i>Solde</p>
+              <p class="fw-semibold text-success">{{ profil.solde }} FC</p>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-6">
+              <p class="mb-1 text-muted"><i class="fas fa-gift me-2"></i>Gains Retirés</p>
+              <p class="fw-semibold text-primary">{{ profil.gains_retires }} FC</p>
+            </div>
+            <div class="col-6 text-end">
+              <p class="mb-1 text-muted"><i class="fas fa-check-circle me-2"></i>Statut Paiement</p>
+              <p class="fw-semibold">
+                {% if profil.is_paid %}
+                  <span class="badge bg-success">Payé</span>
+                {% else %}
+                  <span class="badge bg-warning text-dark">En attente</span>
+                {% endif %}
+              </p>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="mb-3">
+            <p class="mb-1 text-muted"><i class="fas fa-code me-2"></i>Mon Code de Parrainage</p>
+            <div class="d-flex justify-content-between align-items-center bg-light rounded p-2">
+              <span class="fw-semibold">{{ profil.mon_code|default:"—" }}</span>
+              <button class="btn btn-sm btn-outline-primary" onclick="copyCode()">Copier</button>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-6">
+              <p class="mb-1 text-muted"><i class="fas fa-user-friends me-2"></i>Parrain</p>
+              <p class="fw-semibold">{{ profil.parrain.username|default:"Aucun" }}</p>
+            </div>
+            <div class="col-6 text-end">
+              <p class="mb-1 text-muted"><i class="fas fa-users me-2"></i>Mes Filleuls</p>
+              <p class="fw-semibold">{{ user.filleuls.count }}</p>
+            </div>
+          </div> 
+          </div>
+
+          <div class="text-center mt-4">
+            <a href="{% url 'solde' %}" class="btn btn-primary rounded-pill px-4"><i class="fas fa-wallet me-2"></i>Voir mon solde</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function copyCode() {
+  const code = "{{ profil.mon_code }}";
+  navigator.clipboard.writeText(code);
+  alert("Code copié : " + code);
+}
+</script>
+
 {% endblock %}

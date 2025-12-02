@@ -1,30 +1,77 @@
 {% extends "core/base.html" %}
 {% load static %}
-{% block title %}Page d'acceuil_BusinessSante{% endblock %}
+
+{% block title %}Page d'accueil — Business Santé{% endblock %}
 
 {% block content %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Page d'accueil — Business Santé</title>
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-<style>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
 
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+  .carousel-slide-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9; /* force le ratio 16:9 */
+  overflow: hidden;
+  border-radius: 12px;
+  max-height: 400px; /* réduit un peu la hauteur si nécessaire */
+}
+
+.carousel-slide-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.carousel-caption-custom {
+  position: absolute;
+  bottom: 10%;
+  left: 10%;
+  color: white;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.carousel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.1));
+  z-index: 1;
+}
 </style>
 
+</head>
 
+<body>
 
-<!-- Carousel d'infos optimisé -->
+<!-- Carousel d'infos -->
 <div id="carouselInfos" class="carousel slide mb-5" data-bs-ride="carousel">
   <div class="carousel-inner">
-    
-    <!-- Slide 1 - Image panoramique -->
     <div class="carousel-item active">
       <div class="carousel-slide-container">
         <img src="{% static 'images/bienvenue.png' %}" class="carousel-image-panoramic" alt="Bienvenue">
         <div class="carousel-overlay"></div>
       </div>
     </div>
-    
-    <!-- Slide 2 -->
     <div class="carousel-item">
       <div class="carousel-slide-container">
         <img src="{% static 'images/logo-bs.png.png' %}" class="carousel-image-logo" alt="Logo Business Santé">
@@ -34,8 +81,6 @@
         </div>
       </div>
     </div>
-    
-    <!-- Slide 3 -->
     <div class="carousel-item">
       <div class="carousel-slide-container">
         <img src="{% static 'images/nosproduits.jpeg' %}" class="carousel-image-products" alt="Nos produits">
@@ -45,18 +90,13 @@
         </div>
       </div>
     </div>
-    
   </div>
-  
-  <!-- Navigation -->
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselInfos" data-bs-slide="prev">
     <span class="carousel-control-prev-icon"></span>
   </button>
   <button class="carousel-control-next" type="button" data-bs-target="#carouselInfos" data-bs-slide="next">
     <span class="carousel-control-next-icon"></span>
   </button>
-  
-  <!-- Indicateurs -->
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselInfos" data-bs-slide-to="0" class="active"></button>
     <button type="button" data-bs-target="#carouselInfos" data-bs-slide-to="1"></button>
@@ -64,89 +104,107 @@
   </div>
 </div>
 
-<!-- 2) Dashboard cards -->
+<!-- Dashboard -->
 <div class="row g-4">
-  <!-- Solde disponible -->
-  <div class="col-md-6">
-    <div class="card text-white h-100" style="background:  url('https://cdn.pixabay.com/photo/2025/04/08/15/03/fruhling-9521725_1280.jpg') center/cover;">
-      <div class="card-body d-flex flex-column justify-content-between">
-        <div>
-          <h3 class="card-title"><i class="fas fa-wallet me-2"></i>Solde disponible</h3>
-          <p class="display-6">{{ solde }} FCFA</p>
-        </div>
-        <a href="{% url 'solde' %}"  class="btn btn-light align-self-start">Voir détails</a>
+
+  <!-- Solde -->
+ <div class="col-md-6">
+    <div class="card text-white h-100 position-relative overflow-hidden" style="background-color: #fffbfb;">
+  <img src="{% static 'images/solde.png' %}" 
+       class="position-absolute top-50 start-50 translate-middle" 
+       style="max-width: 90%; max-height: 90%; z-index: 0; opacity: 0.95;" 
+       alt="Fond">
+  
+  <div class="card-body d-flex flex-column justify-content-between position-relative" style="z-index: 1;">
+    <div>
+      <h3 class="card-title"><i class="fas fa-wallet me-2"></i>Solde disponible</h3>
+      <p class="display-6">{{ solde }} FCFA</p>
+    </div>
+    <a href="{% url 'solde' %}" class="btn btn-light align-self-start">Voir détails</a>
+  </div>
+</div>
+
+ </div>
+
+ <!-- Filleuls -->
+<div class="col-md-6">
+  <div class="card text-white h-100 position-relative overflow-hidden" style="background-color: #fffbfb;">
+    <img src="https://sdmntpritalynorth.oaiusercontent.com/files/00000000-dab4-6246-8bf9-56e665c64ada/raw?se=2025-07-24T14%3A44%3A27Z&sp=r&sv=2024-08-04&sr=b&scid=5844416e-ef69-5382-aac4-c8a16106803d&skoid=b32d65cd-c8f1-46fb-90df-c208671889d4&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-07-24T04%3A25%3A25Z&ske=2025-07-25T04%3A25%3A25Z&sks=b&skv=2024-08-04&sig=BRWjs%2BZeD1B2I8qB%2B36aJ6jXKR0oqW90PfFR1uTJzIE%3D" 
+         class="position-absolute top-50 start-50 translate-middle" 
+         style="max-width: 90%; max-height: 90%; opacity: 0.25; z-index: 0;" alt="Fond">
+    
+    <div class="card-body d-flex flex-column justify-content-between position-relative" style="z-index: 1;">
+      <div>
+        <h3 class="card-title"><i class="fas fa-user-friends me-2"></i>Filleuls</h3>
+        <p class="fw-semibold">{{ user.filleuls.count }}</p>
       </div>
+      <a href="{% url 'filleuls' %}" class="btn btn-light align-self-start">Voir mes filleuls</a>
     </div>
   </div>
+</div>
 
-  <!-- Filleuls -->
-  <div class="col-md-6">
-    <div class="card text-white h-100" style="background: url('https://cdn.pixabay.com/photo/2025/04/08/15/03/fruhling-9521725_1280.jpg') center/cover;">
-      <div class="card-body d-flex flex-column justify-content-between">
-        <div>
-          <h3 class="card-title"><i class="fas fa-user-friends me-2"></i>Filleuls</h3>
-          <p class="display-6">{{ nb_filleuls }}</p>
-          <ul class="list-unstyled">
-            {% for f in filleuls %}
-              <li>• {{ f.filleul.username }}</li>
-            {% empty %}
-              <li>Aucun filleul</li>
-            {% endfor %}
-          </ul>
-        </div>
-        <a href="{% url 'filleuls' %}" class="btn btn-light align-self-start">Voir mes filleuls</a>
+<!-- Gains -->
+<div class="col-md-6">
+  <div class="card text-white h-100 position-relative overflow-hidden" style="background-color: #fffbfb;">
+    <img src="https://sdmntpritalynorth.oaiusercontent.com/files/00000000-2450-6246-81ef-4eb0060768b4/raw?se=2025-07-24T14%3A50%3A25Z&sp=r&sv=2024-08-04&sr=b&scid=ae5b3c3a-2a1c-57f6-a2c9-e7d3ff3d742e&skoid=b32d65cd-c8f1-46fb-90df-c208671889d4&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-07-24T08%3A27%3A51Z&ske=2025-07-25T08%3A27%3A51Z&sks=b&skv=2024-08-04&sig=uxjpYwSN5upRiilUUSWJCpC0bBBJBtmIOrzIL7EtM%2Bs%3D" 
+         class="position-absolute top-50 start-50 translate-middle" 
+         style="max-width: 90%; max-height: 90%; opacity: 0.25; z-index: 0;" alt="Fond">
+    
+    <div class="card-body d-flex flex-column justify-content-between position-relative" style="z-index: 1;">
+      <div>
+        <h3 class="card-title"><i class="fas fa-coins me-2"></i>Mes gains</h3>
+        <ul class="list-unstyled">
+          {% for item in achats %}
+            <li>• {{ item.produit.nom }} (x{{ item.quantite }})</li>
+          {% empty %}
+            <li>Aucun achat</li>
+          {% endfor %}
+        </ul>
       </div>
+      <a href="{% url 'gains' %}" class="btn btn-light align-self-start">Voir tout</a>
     </div>
   </div>
+</div>
 
-  <!-- Gains -->
+<!-- Produits -->
+<div class="col-md-6">
+  <div class="card text-white h-100 position-relative overflow-hidden" style="background-color: #000;">
+    <img src="https://cdn.pixabay.com/photo/2025/04/08/15/03/fruhling-9521725_1280.jpg" 
+         class="position-absolute top-50 start-50 translate-middle" 
+         style="max-width: 90%; max-height: 90%; opacity: 0.25; z-index: 0;" alt="Fond">
+
+    <div class="card-body d-flex flex-column justify-content-between position-relative" style="z-index: 1;">
+      <div>
+        <h3 class="card-title"><i class="fas fa-boxes me-2"></i>Produits</h3>
+        <ul class="list-unstyled">
+          {% for item in achats %}
+            <li>• {{ item.produit.nom }} (x{{ item.quantite }})</li>
+          {% empty %}
+            <li>Aucun achat</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <a href="{% url 'produits' %}" class="btn btn-light align-self-start">Voir tout</a>
+    </div>
+  </div>
+</div>
+
+  <!-- Derniers achats -->
   <div class="col-md-6">
-    <div class="card text-white h-100" style="background: url('https://cdn.pixabay.com/photo/2025/04/08/15/03/fruhling-9521725_1280.jpg') center/cover;">
-      <div class="card-body d-flex flex-column justify-content-between">
+    <div class="card text-white h-100" 
+     style="background-image: url('https://sdmntprwestus3.oaiusercontent.com/files/bddc3bacdfa14e9_00000000-256c-61fd-a1e5-8c2526f48221/drvs/thumbnail/raw?se=2025-07-24T13%3A07%3A22Z&sp=r&sv=2024-08-04&sr=b&scid=045100b3-c72b-5d22-aea3-c3cd9fdc6497&skoid=eb780365-537d-4279-a878-cae64e33aa9c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-07-24T11%3A42%3A52Z&ske=2025-07-25T11%3A42%3A52Z&sks=b&skv=2024-08-04&sig=eU198uE/ce2ORO4cuwKYaAbXr5Ot4HKcmzdMsjx0DZ4%3D'); 
+            background-size: contain; 
+            background-repeat: no-repeat; 
+            background-position: center; 
+            background-color: #fffbfb; /* pour bien voir le contraste */
+            opacity: 0.95;">
+      <div class="card-body d-flex flex-column justify-content-between position-relative" style="z-index: 2;">
         <div>
-          <h3 class="card-title"><i class="fas fa-shopping-cart me-2"></i>Mes gains</h3>
+          <h3 class="card-title"><i class="fas fa-history me-2"></i>Derniers achats</h3>
           <ul class="list-unstyled">
             {% for item in achats %}
               <li>• {{ item.produit.nom }} (x{{ item.quantite }})</li>
-            {% empty %}
-              <li>Aucun achat</li>
-            {% endfor %}
-          </ul>
-        </div>
-        <a href="{% url 'gains' %}" class="btn btn-light align-self-start">Voir tout</a>
-      </div>
-    </div>
-  </div>
-
-    <!-- Produits -->
-  <div class="col-md-6">
-    <div class="card text-white h-100" style="background: url('https://cdn.pixabay.com/photo/2025/04/08/15/03/fruhling-9521725_1280.jpg') center/cover;">
-      <div class="card-body d-flex flex-column justify-content-between">
-        <div>
-          <h3 class="card-title"><i class="fas fa-shopping-cart me-2"></i>Produits</h3>
-          <ul class="list-unstyled">
-            {% for item in achats %}
-              <li>• {{ item.produit.nom }} (x{{ item.quantite }})</li>
-            {% empty %}
-              <li>Aucun achat</li>
-            {% endfor %}
-          </ul>
-        </div>
-        <a href="{% url 'produits' %}" class="btn btn-light align-self-start">Voir tout</a>
-      </div>
-    </div>
-  </div>
-
-    <!-- Derniers achats -->
-  <div class="col-md-6">
-    <div class="card text-white h-100" style="background: url('https://cdn.pixabay.com/photo/2025/04/08/15/03/fruhling-9521725_1280.jpg') center/cover;">
-      <div class="card-body d-flex flex-column justify-content-between">
-        <div>
-          <h3 class="card-title"><i class="fas fa-shopping-cart me-2"></i>Derniers achats</h3>
-          <ul class="list-unstyled">
-            {% for item in achats %}
-              <li>• {{ item.produit.nom }} (x{{ item.quantite }})</li>
-            {% empty %}
+              {% empty %}
               <li>Aucun achat</li>
             {% endfor %}
           </ul>
@@ -157,17 +215,24 @@
   </div>
 
   <!-- Demander un retrait -->
-  <div class="col-md-6">
-    <div class="card text-white h-100" style="background: url('https://cdn.pixabay.com/photo/2025/04/08/15/03/fruhling-9521725_1280.jpg') center/cover;">
-      <div class="card-body d-flex flex-column justify-content-between">
-        <div>
-          <h3 class="card-title"><i class="fas fa-hand-holding-usd me-2"></i>Demander un retrait</h3>
-          <p>Cliquez pour transférer vos gains</p>
-        </div>
-        <a href="{% url 'demander_retrait' %}" class="btn btn-light align-self-start">Faire une demande</a>
+<div class="col-md-6">
+  <div class="card text-white h-100 position-relative overflow-hidden" style="background-color: #000;">
+    <img src="https://cdn.pixabay.com/photo/2025/04/08/15/03/fruhling-9521725_1280.jpg" 
+         class="position-absolute top-50 start-50 translate-middle" 
+         style="max-width: 90%; max-height: 90%; opacity: 0.25; z-index: 0;" alt="Fond">
+
+    <div class="card-body d-flex flex-column justify-content-between position-relative" style="z-index: 1;">
+      <div>
+        <h3 class="card-title"><i class="fas fa-hand-holding-usd me-2"></i>Demander un retrait</h3>
+        <p>Cliquez pour transférer vos gains</p>
       </div>
+      <a href="{% url 'demander_retrait' %}" class="btn btn-light align-self-start">Faire une demande</a>
     </div>
   </div>
 </div>
 
+</div>
+
+</body>
+</html>
 {% endblock %}

@@ -138,3 +138,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'  # Crée un dossier 'staticfiles' à la r
 STATICFILES_DIRS = [
     BASE_DIR / 'static', 
 ]
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/home/'
+LOGOUT_REDIRECT_URL = '/login/'
+
+

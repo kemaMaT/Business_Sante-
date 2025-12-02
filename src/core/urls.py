@@ -3,30 +3,38 @@ from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
-    path('', auth_views.LoginView.as_view(template_name='core/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+  
+     # Authentification
+    #path('', auth_views.LoginView.as_view(template_name='core/login.html'), name='login'),
+    path('login/', auth_views.LoginView.as_view(template_name='core/login.html'), name='login'),
+
+    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('register/', views.register, name='register'),
+
+    # Pages principales
+    path('home/', views.home, name='home'),
+    path('profile/', views.profile, name='profile'),
+    path('', views.start, name='start'),
+
+    # Produits & panier
     path('produits/', views.produits_list, name='produits'),
     path('panier/', views.panier_view, name='panier'),
     path('ajouter-au-panier/<int:produit_id>/', views.ajouter_au_panier, name='ajouter_au_panier'),
     path('supprimer-du-panier/<int:produit_id>/', views.supprimer_du_panier, name='supprimer_du_panier'),
-    path("retrait/", views.retirer_gains, name="retrait"),
-    path('home/', views.home, name='home'),
-    path('profile/', views.profile, name='profile'),
-    path('retrait/', views.demander_retrait, name='demander_retrait'),
-    path('start/', views.start, name='start'),
 
-    path('cgu/', views.cgu, name='cgu'),
-    path('cgv/', views.cgv, name='cgv'),
-    path('payment/', views.payment, name='payment'),
+    # Retraits et paiements
     path('solde/', views.solde, name='solde'),
+    path('payment/', views.payment, name='payment'),
+    path("retrait/", views.retirer_gains, name="retrait"),
+    path('retrait/', views.demander_retrait, name='demander_retrait'),
+
+    # Parrainage
     path('filleuls/', views.mes_filleuls_view, name='filleuls'),
     path('gains/', views.mes_gains_view, name='gains'),
 
-   
-   
-
-
-    
+    # Informations
+    path('cgu/', views.cgu, name='cgu'),
+    path('cgv/', views.cgv, name='cgv'),
 ]
+   
 

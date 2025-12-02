@@ -1,26 +1,48 @@
+from datetime import datetime
+import random
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
+from .utils import get_generations_users, GEN_PERC
 
-from .models import Produit, Panier, Profil,Parrainage, Achat
+from .models import CustomUser, Produit, Panier, Profil,Parrainage, Achat
 from .forms import RegisterForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from decimal import Decimal
 from django.core.mail import send_mail
 
-
+@login_required
 def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            phone_number = form.cleaned_data.get('phone_number')
-            profil, created = Profil.objects.get_or_create(utilisateur=user, defaults={'telephone': phone_number})
+            prenom = form.cleaned_data.get('prenom')
+            nom_de_famille = form.cleaned_data.get('nom_de_famille')
+            suggestions = generate_username_suggestions(prenom, nom_de_famille)
 
-            # Envoi email de confirmation
+            # tu peux par exemple en choisir un automatiquement :
+            username = random.choice(suggestions)
+
+            user = form.save(commit=False)
+            user.username = username
+            code = form.cleaned_data.get('code_parrain')
+
+            # Lier le parrain automatiquement
+            if code:
+                try:
+                    parrain = CustomUser.objects.get(code_parrainage=code)
+                    user.parrain = parrain
+                except CustomUser.DoesNotExist:
+                    pass  # code invalide → pas de parrain
+
+            user.save()
+            phone_number = form.cleaned_data.get('phone_number')
             
-            return redirect('payment')  # redirection vers la page de paiement
-           
+            profil, created = Profil.objects.get_or_create(utilisateur=user, defaults={'telephone': phone_number})
+            login(request, user)
+            #Profil.objects.create(utilisateur=user)
+
+            return redirect('payment')
     else:
         form = RegisterForm()
     return render(request, "core/register.html", {"form": form})
@@ -29,17 +51,19 @@ def register(request):
 def home(request):
     utilisateur = request.user
 
-    # Exemple de calculs
-    total_gains = utilisateur.solde
+    # Récupérer le profil associé à l'utilisateur
+    profil = Profil.objects.get(utilisateur=utilisateur)
+
+    total_gains = profil.solde
     filleuls = Parrainage.objects.filter(parrain=utilisateur)
     nb_filleuls = filleuls.count()
-
     achats = Panier.objects.filter(utilisateur=utilisateur)
 
     context = {
         'solde': total_gains,
         'nb_filleuls': nb_filleuls,
         'achats': achats,
+        'profil': profil,
     }
 
     return render(request, 'core/start.html', context)
@@ -51,7 +75,20 @@ def demander_retrait(request):
 
 @login_required
 def profile(request):
-    return render(request, 'core/profile.html')
+
+    user = request.user
+    profil, _ = Profil.objects.get_or_create(utilisateur=user)
+    # autres données utiles
+    nb_filleuls = user.filleuls.count() if hasattr(user, 'filleuls') else 0
+    filleuls = user.filleuls.select_related('profil').all() if hasattr(user, 'filleuls') else []
+
+    context = {
+        'user': user,
+        'profil': profil,
+        'nb_filleuls': nb_filleuls,
+        'filleuls': filleuls,
+    }
+    return render(request, 'core/profile.html', context)
 
 def start(request):
     return render(request, 'core/home.html')
@@ -166,11 +203,30 @@ def solde(request):
 
 @login_required
 def mes_filleuls_view(request):
-    filleuls = Profil.objects.filter(parrain=request.user)
+    user = request.user
+
+    # Génération 1 : filleuls directs
+    gen1_users = CustomUser.objects.filter(parrain=user)
+
+    # Génération 2
+    gen2_users = CustomUser.objects.filter(parrain__in=gen1_users)
+
+    # Génération 3
+    gen3_users = CustomUser.objects.filter(parrain__in=gen2_users)
+
+    # Génération 4+
+    gen4_users = CustomUser.objects.filter(parrain__in=gen3_users)
+
+    all_users = list(gen1_users) + list(gen2_users) + list(gen3_users) + list(gen4_users)
+
+    # 👉 Convertir Users → Profils
+    filleuls = Profil.objects.filter(utilisateur__in=all_users)
+
     return render(request, 'core/mes_filleuls.html', {'filleuls': filleuls})
 
+
 @login_required
-def mes_gains_view(request):
+def Mes_gains_view(request):
     user = request.user
 
     # Gains sur ses propres achats (6%)
@@ -206,5 +262,46 @@ def mes_gains_view(request):
         'achats_1': achats_1,
         'achats_2': achats_2,
         'achats_3': achats_3,
+    }
+    return render(request, 'core/mes_gains.html', context)
+
+def generate_username_suggestions(first_name, last_name):
+    year = datetime.now().year % 100  # ex: 25 pour 2025
+    suggestions = [
+        f"{first_name.lower()}{last_name[0].lower()}",
+        f"{first_name.lower()}.{last_name.lower()}",
+        f"{last_name.lower()}.{first_name[0].lower()}",
+        f"{first_name.lower()}_{year}",
+        f"{first_name.lower()}{last_name.lower()[:2]}{random.randint(10,99)}",
+    ]
+    return suggestions
+
+@login_required
+def mes_gains_view(request):
+    user = request.user
+    # gains personnels (si tu veux un 6% sur ses propres achats)
+    mes_achats = Achat.objects.filter(utilisateur=user)
+    gain_propre = sum([a.montant * 0.06 for a in mes_achats])
+
+    gens = get_generations_users(user)
+    gain_parrain = 0
+    breakdown = {}
+    for gen, users in gens.items():
+        pct = GEN_PERC.get(gen, 0)
+        gen_total = 0
+        for u in users:
+            achats = Achat.objects.filter(utilisateur=u)
+            for a in achats:
+                gen_total += a.montant * pct
+        breakdown[gen] = gen_total
+        gain_parrain += gen_total
+
+    total = gain_propre + gain_parrain
+
+    context = {
+        'gain_propre': gain_propre,
+        'breakdown': breakdown,
+        'gain_parrain': gain_parrain,
+        'total_gains': total,
     }
     return render(request, 'core/mes_gains.html', context)
