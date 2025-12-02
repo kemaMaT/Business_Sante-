@@ -1,4 +1,8 @@
 .venv
-src\AcademEase\settings.py
+src\business_sante\settings.py
 .venv\Lib\site-packages
 src\business_sante\__pycache__
+db.sqlite3
+business_sante-
+src\core\__pycache__
+src\core\migrations
