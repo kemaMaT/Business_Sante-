@@ -1,0 +1,202 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Modifier Profil{% endblock %}
+
+{% block content %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    .profile-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+/* Ligne décorative moderne */
+.profile-title::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  margin: 12px auto 0;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #00e5ff, #00c853);
+}
+
+</style>
+
+<div class="profile-bg">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+
+        <div class="card profile-card border-0 rounded-4">
+          <div class="card-body p-5">
+
+           <h2 class="profile-title text-center mb-5">
+                Modifier mon profil
+            </h2>
+
+
+            <form method="POST" id="profileForm">
+              {% csrf_token %}
+
+              <!-- PHOTO -->
+              <div class="text-center mb-4">
+                <div class="photo-wrapper mx-auto mb-3">
+                  <img id="imagePreview"
+                       src="{% if profil.avatar %}{{ profil.avatar.url }}{% else %}{% static 'images/avatar.png' %}{% endif %}"
+                       class="profile-photo">
+                </div>
+
+                <input type="file" id="imageInput"
+                       class="form-control custom-input"
+                       accept="image/*">
+              </div>
+
+              <div class="row g-4">
+
+                <div class="col-md-6">
+                  <label class="form-label text-white fw-semibold">Téléphone</label>
+                  <input type="text" name="telephone"
+                         class="form-control custom-input"
+                         value="{{ profil.telephone }}">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label text-white fw-semibold">Email</label>
+                  <input type="email" name="email"
+                         class="form-control custom-input"
+                         value="{{ user.email }}">
+                </div>
+
+              </div>
+
+              <input type="hidden" name="cropped_image" id="croppedImageInput">
+
+              <div class="d-flex gap-3 mt-5">
+                <button type="submit"
+                        class="btn btn-outline-light flex-fill rounded-pill py-2 ">
+                  💾 Enregistrer
+                </button>
+
+                <a href="{% url 'profile' %}"
+                   class="btn btn-outline-light flex-fill rounded-pill py-2">
+                  Annuler
+                </a>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+<script>
+let cropper;
+const imageInput = document.getElementById('imageInput');
+const imagePreview = document.getElementById('imagePreview');
+const form = document.getElementById('profileForm');
+const croppedImageInput = document.getElementById('croppedImageInput');
+
+imageInput.addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = function(event) {
+    imagePreview.src = event.target.result;
+
+    if (cropper) cropper.destroy();
+
+    cropper = new Cropper(imagePreview, {
+      aspectRatio: 1,
+      viewMode: 1
+    });
+  };
+
+  reader.readAsDataURL(file);
+});
+
+form.addEventListener('submit', function(e) {
+  if (cropper) {
+    e.preventDefault();
+    const canvas = cropper.getCroppedCanvas({
+      width: 400,
+      height: 400
+    });
+    croppedImageInput.value = canvas.toDataURL('image/jpeg');
+    form.submit();
+  }
+});
+</script>
+
+<style>
+
+/* ===== BACKGROUND ===== */
+.profile-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #3c6ea0, #043a63, #42f596);
+  display: flex;
+  align-items: center;
+}
+
+/* ===== CARD GLASS EFFECT ===== */
+.profile-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  color: white;
+}
+
+/* ===== PHOTO ===== */
+.photo-wrapper {
+  width: 220px;
+  height: 220px;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.profile-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===== INPUT STYLE ===== */
+.custom-input {
+  border-radius: 12px;
+  border: none;
+  padding: 10px 15px;
+}
+
+.custom-input:focus {
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
+}
+
+/* ===== BUTTON MODERN ===== */
+.btn-modern {
+  background: linear-gradient(45deg, #1a743f, #486d30);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-modern:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+</style>
+
+{% endblock %}

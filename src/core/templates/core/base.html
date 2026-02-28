@@ -1,9 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% block title %}Business Santé{% endblock %}</title>
+  <link rel="icon" type="image/png" href="{% static 'images/logo-bs.png.png' %}">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   
@@ -48,15 +50,17 @@
 
 
   <!-- Header -->
-  <header class="bg-blue-900 text-white flex items-center justify-between px-6 py-4 shadow-md">
+  <header class="bg-blue-900 text-white flex items-center justify-between px-6 py-4 shadow-md" style=" background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);">
     <div class="flex items-center gap-4">
       <!-- ✅ Toggle Button always visible -->
 
-      <button id="toggleSidebar" class="bg-accent p-2 rounded-md text-white hover:bg-green-600 transition">
-        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-          <path d="M3 6h14M3 10h14M3 14h14" />
-        </svg>
-      </button>
+      <a href="{% url 'home' %}">
+        <button class="bg-accent p-2 rounded-md text-white hover:bg-green-600 transition">
+          <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
+            <path d="pogytc" />
+          </svg>
+        </button>
+      </a>
 
       <h1 class="text-xl font-semibold" style="font-family:Verdana, Geneva, Tahoma, sans-serif;">Business Santé</h1>
     </div>
@@ -65,65 +69,6 @@
   <div class="flex flex-1">
     <!-- Sidebar -->
 
-    <aside id="sidebar" class="relative bg-white text-primary w-64 p-6 space-y-4 shadow-md transition-all duration-300 overflow-hidden">
-
-        <!-- ✅ Filigrane vertical -->
-        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <span class="text-6xl font-extrabold text-blue-200 opacity-20 transform -rotate-90 select-none tracking-widest whitespace-nowrap">
-            BUSINESS SANTÉ
-          </span>
-        </div>
-      
-        <!-- ✅ Menu réel -->
-        <div class="relative z-10 space-y-6">
-      
-          <!-- Profil Section -->
-          <div>
-            <h2 class="text-lg font-semibold mb-2">Mon Compte</h2>
-            <ul class="space-y-3">
-              <li class="flex items-center space-x-3">
-                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m6 4H9m3-8h-.01"></path>
-                </svg>
-                <a href="{% url 'profile' %}" class="text-gray-700 hover:text-accent">Profil</a>
-              </li>
-            </ul>
-          </div>
-      
-          <hr class="border-gray-300">
-      
-          <!-- Retrait Section -->
-          <div>
-            <h2 class="text-lg font-semibold mb-2">Mon Compte</h2>
-            <ul class="space-y-3">
-              <li class="flex items-center space-x-3">
-                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-                <a href="{% url 'retrait' %}" class="text-gray-700 hover:text-accent">Retirer mes gains</a>
-              </li>
-            </ul>
-          </div>
-      
-          <hr class="border-gray-300">
-      
-          <!-- Déconnexion Section -->
-          <div>
-            <h2 class="text-lg font-semibold mb-2">Paramètres</h2>
-            <ul class="space-y-3">
-              <li class="flex items-center space-x-3">
-                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l4-4m0 0l-4-4m4 4H3"></path>
-                </svg>
-                <a href="/" class="text-gray-700 hover:text-accent">Déconnexion</a>
-              </li>
-            </ul>
-          </div>
-      
-        </div>
-      
-    </aside>
-      
     <!-- Main content -->
     <main class="flex-1 p-6">
       <div class="bg-white p-6 rounded shadow">
@@ -134,7 +79,7 @@
   </div>
 
   <!-- Footer -->
-  <footer class="bg-gray-800 text-white py-4 text-center text-sm mt-auto">
+  <footer class="bg-gray-800 text-white py-4 text-center text-sm mt-auto" style=" background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);">
     &copy; {{ now|date:"Y" }} Business Santé. Tous droits réservés.
   </footer>
 

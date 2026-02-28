@@ -1,15 +1,130 @@
-<h2>Nos Produits</h2>
-<ul>
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Nos Produits{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+  <!-- Header Nos Produits -->
+<div class="page-header mb-5" style="background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+    <div class="d-flex justify-content-between align-items-center">
+        <!-- Bouton Retour -->
+        <button onclick="window.history.back()" class="btn btn-light shadow-sm rounded-pill">
+            <i class="fas fa-arrow-left me-2"></i> Retour
+        </button>
+
+        <!-- Titre central -->
+        <div class="text-center flex-grow-1">
+            <h2 class="fw-bold mb-1" style="color: #f8f9fa; font-size: 2.5rem;">
+                <i class="fas fa-box-open text-warning me-2"></i> Nos Produits
+            </h2>
+            <p class="text-muted mb-0" style="color: #f8f9fa !important;">
+                Découvrez nos produits et ajoutez-les à votre panier
+            </p>
+        </div>
+
+        <!-- Placeholder pour équilibrer le bouton retour -->
+        <div style="width:120px;"></div>
+    </div>
+</div>
+
+  <!-- Grille des produits -->
+<div class="row g-4">
+
     {% for produit in produits %}
-        <li>
-            <h3>{{ produit.nom }}</h3>
-            <p>Prix : {{ produit.prix }} €</p>
-            {% if produit.image %}
-                <img src="{{ produit.image.url }}" alt="{{ produit.nom }}" width="150">
-            {% endif %}
-            <br>
-            <a href="{% url 'ajouter_au_panier' produit.id %}">Ajouter au Panier</a>
-        </li>
-    {% endfor %}
-</ul>
-<a href="{% url 'panier' %}">Voir mon Panier</a>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden produit-card">
+
+          <!-- Image du produit -->
+          {% if produit.image %}
+            <img src="{{ produit.image.url }}" class="card-img-top produit-image" alt="{{ produit.nom }}">
+          {% else %}
+            <img src="{% static 'images/placeholder.png' %}" class="card-img-top produit-image" alt="Placeholder">
+          {% endif %}
+
+          <!-- Contenu de la carte -->
+          <div class="card-body d-flex flex-column justify-content-between">
+
+            <div>
+              <!-- Nom du produit -->
+              <h5 class="card-title fw-bold">{{ produit.nom }}</h5>
+
+              <!-- Prix -->
+                <p class="card-text fw-semibold mb-2" style="color: #28a745;">
+                    Prix : {{ produit.prix }} FC
+                </p>
+
+
+              <!-- Description courte -->
+              <p class="card-text text-muted">
+                {{ produit.description|truncatewords:20 }}
+              </p>
+            </div>
+
+            <!-- Bouton Ajouter au Panier -->
+            <div>
+                <form method="post" action="{% url 'ajouter_au_panier' produit.id %}">
+                    {% csrf_token %}
+
+                    <label for="quantite-{{ produit.id }}" class="form-label">
+                        Quantité :
+                    </label>
+                    <input type="number" name="quantite" id="quantite-{{ produit.id }}" value="1" min="1" max="1000" class="form-control mb-2" style="width:100px;">
+                    
+                    <button type="submit" class="btn btn-primary mt-2 rounded-pill shadow-sm produit-btn" style="background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);">
+                        <i class="fas fa-cart-plus me-2"></i>
+                        Ajouter au Panier
+                    </button>
+
+                </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+        {% endfor %}
+    </div>
+
+  <!-- Bouton central vers le panier -->
+    <div class="text-center mt-5">
+        <a href="{% url 'panier' %}" class="btn btn-success btn-lg rounded-pill shadow-sm">
+            <i class="fas fa-shopping-cart me-2"></i> Voir mon Panier
+        </a>
+    </div>
+
+</div>
+
+<!-- Styles supplémentaires -->
+<style>
+.produit-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.produit-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+}
+.produit-btn {
+  font-weight: 600;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.produit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+.produit-image {
+  height: 220px;
+  object-fit: cover; /* garde l'image centrée et proportionnée */
+}
+.card-body h5 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+.card-body p {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+</style>
+{% endblock %}

@@ -3,60 +3,104 @@
 
 {% block content %}
 <div class="container py-5">
+
+  <!-- Header avec flèche retour -->
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold text-primary">
-      <i class="fas fa-users me-2"></i>Mes Filleuls
-    </h2>
+    <div>
+      <a href="{% url 'home' %}" class="btn btn-outline-primary btn-sm me-2">
+        <i class="fas fa-arrow-left"></i> Retour
+      </a>
+      <span class="fs-4 fw-bold text-primary"><i class="fas fa-users me-2"></i>Mes Filleuls</span>
+    </div>
   </div>
 
   {% if filleuls %}
-    <div class="card shadow-sm border-0 rounded-3">
+    <div class="card shadow-sm border-0 rounded-4">
       <div class="card-body p-0">
-        <table class="table table-hover align-middle mb-0">
-          <thead class="table-dark">
-            <tr>
-              <th scope="col">Nom d'utilisateur</th>
-              <th scope="col">Email</th>
-              <th scope="col">Téléphone</th>
-              <th scope="col">Gains (FC)</th>
-              <th scope="col">Date d'adhésion</th>
-              <th scope="col"># de filleuls</th>
-              <th scope="col">Génération</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for profil in filleuls %}
-              <tr class="
-                {% if profil.get_generation == 1 %}table-success border-success{% elif profil.get_generation == 2 %}table-warning border-warning{% elif profil.get_generation == 3 %}table-info border-info{% endif %}
-              ">
-                <td class="fw-semibold">{{ profil.utilisateur.username }}</td>
-                <td>{{ profil.utilisateur.email }}</td>
-                <td>{{ profil.telephone|default:"—" }}</td>
-                <td>{{ profil.solde|floatformat:0 }}</td>
-                <td>{{ profil.utilisateur.date_joined|date:"d/m/Y" }}</td>
-                <td>{{ profil.utilisateur.filleuls.count }}</td>
-                <td>
-                  <span class="badge 
-                    {% if profil.get_generation == 1 %}bg-success
-                    {% elif profil.get_generation == 2 %}bg-warning text-dark
-                    {% elif profil.get_generation == 3 %}bg-info text-dark
-                    {% elif profil.get_generation >= 4 %}table-danger border-danger
-                    {% else %}bg-secondary{% endif %}
-                  ">
-                    Génération {{ profil.get_generation }}
-                  </span>
-                </td>
+        <div class="table-responsive">
+          <table class="table align-middle mb-0">
+            <thead class="bg-primary text-white">
+              <tr>
+                <th scope="col">Nom d'utilisateur</th>
+                <th scope="col">Email</th>
+                <th scope="col">Téléphone</th>
+                <th scope="col">Gains (FC)</th>
+                <th scope="col">Date d'adhésion</th>
+                <th scope="col"># de filleuls</th>
+                <th scope="col">Génération</th>
               </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {% for profil in filleuls %}
+                <tr class="align-middle
+                  {% if profil.get_generation == 1 %}table-success{% elif profil.get_generation == 2 %}table-warning{% elif profil.get_generation == 3 %}table-info{% endif %}
+                ">
+                  <td class="fw-semibold">{{ profil.utilisateur.username }}</td>
+                  <td>{{ profil.utilisateur.email }}</td>
+                  <td>{{ profil.telephone|default:"—" }}</td>
+                  <td class="text-success fw-bold">{{ profil.solde|floatformat:0 }}</td>
+                  <td>{{ profil.utilisateur.date_joined|date:"d/m/Y" }}</td>
+                  <td>{{ profil.utilisateur.filleuls.count }}</td>
+                  <td>
+                    <span class="badge 
+                      {% if profil.get_generation == 1 %}bg-success
+                      {% elif profil.get_generation == 2 %}bg-warning text-dark
+                      {% elif profil.get_generation == 3 %}bg-info text-dark
+                      {% elif profil.get_generation >= 4 %}bg-danger{% else %}bg-secondary{% endif %}
+                    ">
+                      Génération {{ profil.get_generation }}
+                    </span>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   {% else %}
     <div class="text-center py-5">
-      <i class="fas fa-user-friends fa-3x text-muted mb-3"></i>
+      <i class="fas fa-user-friends fa-4x text-primary mb-3"></i>
       <p class="text-muted fs-5">Vous n'avez pas encore de filleuls.</p>
     </div>
   {% endif %}
+
 </div>
+
+<!-- Styles supplémentaires pour améliorer le visuel -->
+<style>
+  .table thead th {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .table tbody tr {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .table tbody tr:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  .badge {
+    font-size: 0.85rem;
+    padding: 0.4em 0.7em;
+  }
+
+  .btn-outline-primary {
+    border-radius: 50px;
+    padding: 0.35rem 0.75rem;
+  }
+
+  .card {
+    overflow: hidden;
+  }
+
+  .table-responsive {
+    border-radius: 0 0 15px 15px;
+    overflow: hidden;
+  }
+</style>
+
 {% endblock %}

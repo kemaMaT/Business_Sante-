@@ -20,217 +20,371 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
   <style>
-  .carousel-slide-container {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9; /* force le ratio 16:9 */
+  .dashboard-card {
+  height: 320px;
+  border-radius: 18px;
   overflow: hidden;
-  border-radius: 12px;
-  max-height: 400px; /* réduit un peu la hauteur si nécessaire */
+  position: relative;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  transition: transform .3s ease, box-shadow .3s ease;
 }
 
-.carousel-slide-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
+.dashboard-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.25);
 }
 
-.carousel-caption-custom {
+.dashboard-card-bg {
   position: absolute;
-  bottom: 10%;
-  left: 10%;
-  color: white;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 1rem;
-  border-radius: 8px;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.75);
 }
 
-.carousel-overlay {
+.dashboard-card::after {
+  content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.1));
-  z-index: 1;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.6), rgba(0,0,0,.15));
 }
-</style>
 
+.dashboard-card-body {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #fff;
+}
+
+.dashboard-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.dashboard-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+  </style>
+
+  <style>
+    .solde-bg {
+    background-image: url("/static/images/Gemini_Generated_Image_qcxanyqcxanyqcxa.png");
+    background-size: cover;
+    background-position: center;
+    }
+
+    .filleuls-bg {
+    background-image: url("/static/images/Gemini_Generated_Image_ct64tact64tact64.png");
+    background-size: cover; 
+    background-position: center;
+    }
+
+    .produits-bg {
+    background-image: url("/static/images/produits.png");
+    background-size: cover;
+    background-position: center;
+    }
+
+    .profile-bg {
+    background-image: url("/static/images/profile.png");
+    background-size: cover;
+    background-position: center;
+    }
+
+    .succursales-bg {
+    background-image: url("/static/images/succursales.png");
+    background-size: cover;
+    background-position: center;
+    }
+
+    .addproduct-bg {
+    background-image: url("/static/images/ajout.png");
+    background-size: cover;
+    background-position: center;
+    }
+
+  </style>
 </head>
 
-<body>
+<style>
+/* Conteneur principal du slide */
+.carousel-slide-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 420px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  padding: 40px;
+  gap: 40px;
+}
+
+/* Partie image */
+.carousel-image-side {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-image-side img {
+  max-height: 340px;
+  max-width: 100%;
+  object-fit: contain; /* IMPORTANT */
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+/* Partie texte */
+.carousel-text-side {
+  flex: 1;
+  color: white;
+}
+
+.carousel-text-side h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.carousel-text-side p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.carousel-text-side .btn {
+  margin-top: 20px;
+  padding: 10px 25px;
+  font-weight: 600;
+  border-radius: 30px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .carousel-slide-container {
+    flex-direction: column;
+    text-align: center;
+    height: auto;
+  }
+}
+</style>
 
 <!-- Carousel d'infos -->
 <div id="carouselInfos" class="carousel slide mb-5" data-bs-ride="carousel">
   <div class="carousel-inner">
+
+    <!-- Slide 1 -->
     <div class="carousel-item active">
       <div class="carousel-slide-container">
-        <img src="{% static 'images/bienvenue.png' %}" class="carousel-image-panoramic" alt="Bienvenue">
-        <div class="carousel-overlay"></div>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <div class="carousel-slide-container">
-        <img src="{% static 'images/logo-bs.png.png' %}" class="carousel-image-logo" alt="Logo Business Santé">
-        <div class="carousel-caption-custom">
-          <h5>Découvrez nos produits</h5>
-          <p>Et recevez des gains sur chaque achat.</p>
+        <div class="carousel-image-side">
+          <img src="{% static 'images/bienvenue.png' %}" alt="Bienvenue">
+        </div>
+        <div class="carousel-text-side">
+          <h2>Bienvenue sur Business Santé</h2>
+          <p>Achetez intelligemment et recevez des gains sur chaque produit. Une nouvelle façon de consommer et de générer des revenus.</p>
+          <a href="#" class="btn btn-light">Découvrir</a>
         </div>
       </div>
     </div>
+
+    <!-- Slide 2 -->
     <div class="carousel-item">
       <div class="carousel-slide-container">
-        <img src="{% static 'images/nosproduits.jpeg' %}" class="carousel-image-products" alt="Nos produits">
-        <div class="carousel-caption-custom">
-          <h5>Découvrez nos produits</h5>
-          <p>Et recevez des gains sur chaque achat.</p>
+        <div class="carousel-image-side">
+          <img src="{% static 'images/bimangu-GC.jpg' %}" alt="Logo Business Santé">
+        </div>
+        <div class="carousel-text-side">
+          <h2>Découvrez nos produits</h2>
+          <p>Profitez de nos offres exclusives et maximisez vos bénéfices à chaque achat.</p>
+          <a href="#" class="btn btn-light">Voir les produits</a>
         </div>
       </div>
     </div>
+
+    <!-- Slide 3 -->
+    <div class="carousel-item">
+      <div class="carousel-slide-container">
+        <div class="carousel-image-side">
+          <img src="{% static 'images/Gemini_Generated_Image_1arqxo1arqxo1arq.png' %}" alt="Produit 3">
+        </div> 
+        <div class="carousel-text-side">
+          <h2>Nos nouveautés</h2>
+          <p>Restez à jour avec nos derniers produits et offres exclusives.</p>
+          <a href="#" class="btn btn-light">Découvrir</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="carousel-item">
+      <div class="carousel-slide-container">
+        <div class="carousel-image-side">
+          <img src="{% static 'images/Gemini_Generated_Image_xoxjh2xoxjh2xoxj.png' %}" alt="Produit 4">
+        </div> 
+        <div class="carousel-text-side">
+          <h2>Produits populaires</h2>
+          <p>Les articles les plus aimés par nos clients sont disponibles pour vous.</p>
+          <a href="#" class="btn btn-light">Voir les produits</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="carousel-item">
+      <div class="carousel-slide-container">
+        <div class="carousel-image-side">
+          <img src="{% static 'images/Gemini_Generated_Image_e9elxbe9elxbe9el.png' %}" alt="Produit 5">
+        </div> 
+        <div class="carousel-text-side">
+          <h2>Offres spéciales</h2>
+          <p>Ne manquez pas nos promotions et réductions exclusives.</p>
+          <a href="#" class="btn btn-light">Profiter</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="carousel-item">
+      <div class="carousel-slide-container">
+        <div class="carousel-image-side">
+          <img src="{% static 'images/Gemini_Generated_Image_g3pbslg3pbslg3pb.png' %}" alt="Produit 6">
+        </div>
+        <div class="carousel-text-side">
+          <h2>Rejoignez notre communauté</h2>
+          <p>Participez et découvrez comment maximiser vos gains avec Business Santé.</p>
+          <a href="#" class="btn btn-light">En savoir plus</a>
+        </div>
+      </div>
+    </div>
+
   </div>
+
+  <!-- Contrôles -->
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselInfos" data-bs-slide="prev">
     <span class="carousel-control-prev-icon"></span>
   </button>
   <button class="carousel-control-next" type="button" data-bs-target="#carouselInfos" data-bs-slide="next">
     <span class="carousel-control-next-icon"></span>
   </button>
-  <div class="carousel-indicators">
+
+  <!-- Indicateurs -->
+  <div class="carousel-indicators mt-3">
     <button type="button" data-bs-target="#carouselInfos" data-bs-slide-to="0" class="active"></button>
     <button type="button" data-bs-target="#carouselInfos" data-bs-slide-to="1"></button>
     <button type="button" data-bs-target="#carouselInfos" data-bs-slide-to="2"></button>
+    <button type="button" data-bs-target="#carouselInfos" data-bs-slide-to="3"></button>
+    <button type="button" data-bs-target="#carouselInfos" data-bs-slide-to="4"></button>
+    <button type="button" data-bs-target="#carouselInfos" data-bs-slide-to="5"></button>
   </div>
 </div>
 
-<!-- Dashboard -->
-<div class="row g-4">
 
-  <!-- Solde -->
- <div class="col-md-6">
-    <div class="card text-white h-100 position-relative overflow-hidden" style="background-color: #fffbfb;">
-  <img src="{% static 'images/solde.png' %}" 
-       class="position-absolute top-50 start-50 translate-middle" 
-       style="max-width: 90%; max-height: 90%; z-index: 0; opacity: 0.95;" 
-       alt="Fond">
-  
-  <div class="card-body d-flex flex-column justify-content-between position-relative" style="z-index: 1;">
-    <div>
-      <h3 class="card-title"><i class="fas fa-wallet me-2"></i>Solde disponible</h3>
-      <p class="display-6">{{ solde }} FCFA</p>
-    </div>
-    <a href="{% url 'solde' %}" class="btn btn-light align-self-start">Voir détails</a>
-  </div>
-</div>
+    <!-- Dashboard -->
+<div class="container mb-5">
+  <div class="row g-4">
 
- </div>
-
- <!-- Filleuls -->
-<div class="col-md-6">
-  <div class="card text-white h-100 position-relative overflow-hidden" style="background-color: #fffbfb;">
-    <img src="https://sdmntpritalynorth.oaiusercontent.com/files/00000000-dab4-6246-8bf9-56e665c64ada/raw?se=2025-07-24T14%3A44%3A27Z&sp=r&sv=2024-08-04&sr=b&scid=5844416e-ef69-5382-aac4-c8a16106803d&skoid=b32d65cd-c8f1-46fb-90df-c208671889d4&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-07-24T04%3A25%3A25Z&ske=2025-07-25T04%3A25%3A25Z&sks=b&skv=2024-08-04&sig=BRWjs%2BZeD1B2I8qB%2B36aJ6jXKR0oqW90PfFR1uTJzIE%3D" 
-         class="position-absolute top-50 start-50 translate-middle" 
-         style="max-width: 90%; max-height: 90%; opacity: 0.25; z-index: 0;" alt="Fond">
-    
-    <div class="card-body d-flex flex-column justify-content-between position-relative" style="z-index: 1;">
-      <div>
-        <h3 class="card-title"><i class="fas fa-user-friends me-2"></i>Filleuls</h3>
-        <p class="fw-semibold">{{ user.filleuls.count }}</p>
-      </div>
-      <a href="{% url 'filleuls' %}" class="btn btn-light align-self-start">Voir mes filleuls</a>
-    </div>
-  </div>
-</div>
-
-<!-- Gains -->
-<div class="col-md-6">
-  <div class="card text-white h-100 position-relative overflow-hidden" style="background-color: #fffbfb;">
-    <img src="https://sdmntpritalynorth.oaiusercontent.com/files/00000000-2450-6246-81ef-4eb0060768b4/raw?se=2025-07-24T14%3A50%3A25Z&sp=r&sv=2024-08-04&sr=b&scid=ae5b3c3a-2a1c-57f6-a2c9-e7d3ff3d742e&skoid=b32d65cd-c8f1-46fb-90df-c208671889d4&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-07-24T08%3A27%3A51Z&ske=2025-07-25T08%3A27%3A51Z&sks=b&skv=2024-08-04&sig=uxjpYwSN5upRiilUUSWJCpC0bBBJBtmIOrzIL7EtM%2Bs%3D" 
-         class="position-absolute top-50 start-50 translate-middle" 
-         style="max-width: 90%; max-height: 90%; opacity: 0.25; z-index: 0;" alt="Fond">
-    
-    <div class="card-body d-flex flex-column justify-content-between position-relative" style="z-index: 1;">
-      <div>
-        <h3 class="card-title"><i class="fas fa-coins me-2"></i>Mes gains</h3>
-        <ul class="list-unstyled">
-          {% for item in achats %}
-            <li>• {{ item.produit.nom }} (x{{ item.quantite }})</li>
-          {% empty %}
-            <li>Aucun achat</li>
-          {% endfor %}
-        </ul>
-      </div>
-      <a href="{% url 'gains' %}" class="btn btn-light align-self-start">Voir tout</a>
-    </div>
-  </div>
-</div>
-
-<!-- Produits -->
-<div class="col-md-6">
-  <div class="card text-white h-100 position-relative overflow-hidden" style="background-color: #000;">
-    <img src="https://cdn.pixabay.com/photo/2025/04/08/15/03/fruhling-9521725_1280.jpg" 
-         class="position-absolute top-50 start-50 translate-middle" 
-         style="max-width: 90%; max-height: 90%; opacity: 0.25; z-index: 0;" alt="Fond">
-
-    <div class="card-body d-flex flex-column justify-content-between position-relative" style="z-index: 1;">
-      <div>
-        <h3 class="card-title"><i class="fas fa-boxes me-2"></i>Produits</h3>
-        <ul class="list-unstyled">
-          {% for item in achats %}
-            <li>• {{ item.produit.nom }} (x{{ item.quantite }})</li>
-          {% empty %}
-            <li>Aucun achat</li>
-          {% endfor %}
-        </ul>
-      </div>
-      <a href="{% url 'produits' %}" class="btn btn-light align-self-start">Voir tout</a>
-    </div>
-  </div>
-</div>
-
-  <!-- Derniers achats -->
-  <div class="col-md-6">
-    <div class="card text-white h-100" 
-     style="background-image: url('https://sdmntprwestus3.oaiusercontent.com/files/bddc3bacdfa14e9_00000000-256c-61fd-a1e5-8c2526f48221/drvs/thumbnail/raw?se=2025-07-24T13%3A07%3A22Z&sp=r&sv=2024-08-04&sr=b&scid=045100b3-c72b-5d22-aea3-c3cd9fdc6497&skoid=eb780365-537d-4279-a878-cae64e33aa9c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-07-24T11%3A42%3A52Z&ske=2025-07-25T11%3A42%3A52Z&sks=b&skv=2024-08-04&sig=eU198uE/ce2ORO4cuwKYaAbXr5Ot4HKcmzdMsjx0DZ4%3D'); 
-            background-size: contain; 
-            background-repeat: no-repeat; 
-            background-position: center; 
-            background-color: #fffbfb; /* pour bien voir le contraste */
-            opacity: 0.95;">
-      <div class="card-body d-flex flex-column justify-content-between position-relative" style="z-index: 2;">
-        <div>
-          <h3 class="card-title"><i class="fas fa-history me-2"></i>Derniers achats</h3>
-          <ul class="list-unstyled">
-            {% for item in achats %}
-              <li>• {{ item.produit.nom }} (x{{ item.quantite }})</li>
-              {% empty %}
-              <li>Aucun achat</li>
-            {% endfor %}
-          </ul>
+    <!-- Solde -->
+    <div class="col-md-6 col-lg-4">
+      <div class="dashboard-card">
+        <div class="dashboard-card-bg solde-bg"></div>
+          
+        <div class="dashboard-card-body">
+          <div>
+            <h3><i class="fas fa-wallet me-2"></i>Solde</h3>
+            <div class="dashboard-value">{{ solde }} FC</div>
+          </div>
+          <a href="{% url 'gains' %}" class="btn btn-light btn-sm">Voir détails</a>
         </div>
-        <a href="{% url 'gains' %}" class="btn btn-light align-self-start">Voir tout</a>
       </div>
     </div>
-  </div>
 
-  <!-- Demander un retrait -->
-<div class="col-md-6">
-  <div class="card text-white h-100 position-relative overflow-hidden" style="background-color: #000;">
-    <img src="https://cdn.pixabay.com/photo/2025/04/08/15/03/fruhling-9521725_1280.jpg" 
-         class="position-absolute top-50 start-50 translate-middle" 
-         style="max-width: 90%; max-height: 90%; opacity: 0.25; z-index: 0;" alt="Fond">
+    <!-- Filleuls -->
+    <div class="col-md-6 col-lg-4">
+      <div class="dashboard-card">
+        <div class="dashboard-card-bg filleuls-bg"></div>
 
-    <div class="card-body d-flex flex-column justify-content-between position-relative" style="z-index: 1;">
-      <div>
-        <h3 class="card-title"><i class="fas fa-hand-holding-usd me-2"></i>Demander un retrait</h3>
-        <p>Cliquez pour transférer vos gains</p>
+        <div class="dashboard-card-body">
+          <div>
+            <h3><i class="fas fa-user-friends me-2"></i>Filleuls</h3>
+            <div class="dashboard-value">{{ total_filleuls }}</div>
+          </div>
+          <a href="{% url 'filleuls' %}" class="btn btn-light btn-sm">Voir la liste</a>
+        </div>
       </div>
-      <a href="{% url 'demander_retrait' %}" class="btn btn-light align-self-start">Faire une demande</a>
     </div>
-  </div>
-</div>
 
+    <!-- Mon profile -->
+    <div class="col-md-6 col-lg-4">
+      <div class="dashboard-card">
+        <div class="dashboard-card-bg profile-bg"></div>
+
+        <div class="dashboard-card-body">
+          <div>
+            <h3><i class="fas fa-coins me-2"></i>Mon profile</h3>
+            
+          </div>
+          <a href="{% url 'profile' %}" class="btn btn-light btn-sm">voir</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Produits -->
+    <div class="col-md-6 col-lg-4">
+      <div class="dashboard-card">
+        <div class="dashboard-card-bg produits-bg"></div>
+
+        <div class="dashboard-card-body">
+          <div>
+            <h3><i class="fas fa-boxes me-2"></i>Produits</h3>
+            <p class="small mb-0">Découvrez nos produits disponibles</p>
+          </div>
+          <a href="{% url 'produits' %}" class="btn btn-light btn-sm">Voir les produits</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Succursales -->
+    <div class="col-md-6 col-lg-4">
+      <div class="dashboard-card">
+        <div class="dashboard-card-bg succursales-bg"></div>
+
+        <div class="dashboard-card-body">
+          <div>
+            <h3><i class="fas fa-history me-2"></i>Nos Succursales</h3>
+             <p class="small">Decouvrez tous nos points business sante</p>
+          </div>
+          <a href="{% url 'gains' %}" class="btn btn-light btn-sm">Voir tout</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ajouter mon propre produit -->
+    <div class="col-md-6 col-lg-4">
+      <div class="dashboard-card">
+        <div class="dashboard-card-bg addproduct-bg"></div>
+
+        <div class="dashboard-card-body">
+          <div>
+            <h3><i class="fas fa-hand-holding-usd me-2"></i>Ajouter un produit</h3>
+            <p class="small">Ajoutez votre propre produit et gagnez encore plus</p>
+          </div>
+          <a href="{% url 'demander_retrait' %}" class="btn btn-light btn-sm">
+            Demander
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 </body>

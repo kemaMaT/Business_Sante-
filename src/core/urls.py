@@ -1,6 +1,8 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
   
@@ -15,6 +17,8 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('profile/', views.profile, name='profile'),
     path('', views.start, name='start'),
+    path('modifier_profile/', views.modifier_profile, name='modifier_profile'),
+
 
     # Produits & panier
     path('produits/', views.produits_list, name='produits'),
@@ -25,8 +29,11 @@ urlpatterns = [
     # Retraits et paiements
     path('solde/', views.solde, name='solde'),
     path('payment/', views.payment, name='payment'),
+    path('initier_paiement/', views.initier_paiement, name='initier_paiement'),
+
     path("retrait/", views.retirer_gains, name="retrait"),
     path('retrait/', views.demander_retrait, name='demander_retrait'),
+    path("payer_panier/", views.payer_panier, name="payer_panier"),
 
     # Parrainage
     path('filleuls/', views.mes_filleuls_view, name='filleuls'),
@@ -36,5 +43,8 @@ urlpatterns = [
     path('cgu/', views.cgu, name='cgu'),
     path('cgv/', views.cgv, name='cgv'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
    
 

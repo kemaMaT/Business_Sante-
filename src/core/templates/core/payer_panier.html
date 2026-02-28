@@ -1,0 +1,168 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+/* Animation bouton */
+.btn-pay {
+  transition: all 0.3s ease;
+}
+.btn-pay:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Card style “carte bancaire réelle” */
+.payment-card {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #fff;
+  border-radius: 15px;
+  padding: 20px;
+  position: relative;
+  min-height: 250px;
+}
+
+/* Logos Mobile Money */
+.momo-logo {
+  height: 30px;
+  margin-right: 10px;
+}
+
+/* Inputs readonly */
+.card-body input[readonly] {
+  background-color: #f8f9fa;
+}
+
+/* Input group icons */
+.input-group-text {
+  background-color: #e9ecef;
+}
+
+/* Textarea fix */
+textarea.form-control {
+  resize: none;
+}
+
+/* Responsive columns */
+@media (max-width: 768px) {
+  .col-md-6 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-bottom: 1rem;
+  }
+}
+</style>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10" style="width: 750px;">
+
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-4">
+
+            <!-- HEADER MODIFIÉ -->
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-3" style="font-size: 2.5rem; color: #0d47a1;">
+                    💳 Confirmation de votre commande
+                </h2>
+                <p class="text-muted mb-1" style="font-size: 1.1rem;">
+                    Merci de vérifier vos informations avant de confirmer le paiement.
+                </p>
+                <p class="text-muted" style="font-size: 1rem;">
+                    ⚠️ Assurez-vous de saisir correctement votre <strong>adresse de livraison</strong> pour éviter tout retard. 
+                    Une fois le paiement confirmé, cette adresse sera utilisée pour la livraison.
+                </p>
+            </div>
+        
+          <form method="post" action="{% url 'initier_paiement' %}">
+            {% csrf_token %}
+            <input type="hidden" name="total" value="{{ total }}">
+            <input type="hidden" name="commande_id" value="{{ commande.id }}">
+
+            <div class="row">
+
+              <!-- GAUCHE: Infos utilisateur -->
+              <div class="col-md-6 border-end pe-md-4">
+                <h6 class="fw-bold mb-3 text-muted">Informations client</h6>
+
+                <div class="mb-2">
+                  <label class="form-label small">Nom complet</label>
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <input type="text" class="form-control" value="{{ request.user.username }}" readonly>
+                  </div>
+                </div>
+
+                <div class="mb-2">
+                  <label class="form-label small">Email</label>
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    <input type="text" class="form-control" value="{{ request.user.email }}" readonly>
+                  </div>
+                </div>
+
+                <div class="mb-2">
+                  <label class="form-label small">Téléphone</label>
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                    <input type="text" class="form-control" value="{{ request.user.telephone }}" readonly>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">Adresse de livraison</label>
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                    <textarea name="adresse" class="form-control" rows="3" required autofocus></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DROITE: Carte + Paiement -->
+              <div class="col-md-6 ps-md-4">
+                <div class="payment-card d-flex flex-column justify-content-between">
+                  <div>
+                    <h6 class="fw-bold mb-2 text-light">Méthodes de paiement disponible:</h6>
+
+                    <!-- Logos -->
+                    <div class="d-flex gap-2 mb-3">
+                      <img src="{% static 'images/airtel.png' %}" class="momo-logo" alt="Airtel Money">
+                      <img src="{% static 'images/orange.png' %}" class="momo-logo" alt="Orange Money">
+                      <img src="{% static 'images/mpsa.png' %}" class="momo-logo" alt="Mpsa">
+                      <img src="{% static 'images/mtn.jpg' %}" class="momo-logo" alt="MTN Money">
+                      <i class="fas fa-credit-card"></i>
+                    </div>
+
+                    <div class="form-check mb-3">
+                      <input class="form-check-input" type="checkbox" name="certifie" required>
+                      <label class="form-check-label small">
+                        Je certifie que les informations sont exactes.
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Total -->
+                  <div class="bg-light p-3 rounded-3 text-center text-dark mb-3">
+                    <span class="small">Total à payer</span>
+                    <h5 class="fw-bold mb-0">{{ total }} FC</h5>
+                  </div>
+
+                  <!-- Bouton -->
+                  <button type="submit" class="btn btn-success w-100 rounded-pill btn-pay shadow-sm">
+                    <i class="fas fa-lock me-1"></i> Confirmer et payer
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+{% endblock %}

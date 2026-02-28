@@ -1,5 +1,24 @@
 # core/utils.py
 from .models import Profil, Achat  # adapte Achat model
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+
+def generer_facture_pdf(commande):
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="facture_{commande.id}.pdf"'
+
+    p = canvas.Canvas(response)
+    p.drawString(100, 800, f"FACTURE - Business Santé")
+    p.drawString(100, 780, f"Commande ID: {commande.id}")
+    p.drawString(100, 760, f"Client: {commande.utilisateur.username}")
+    p.drawString(100, 740, f"Total: {commande.total} FC")
+    p.drawString(100, 720, f"Statut: {commande.statut}")
+
+    p.showPage()
+    p.save()
+
+    return response
 
 GEN_PERC = {1: 0.10, 2: 0.06, 3: 0.03}
 

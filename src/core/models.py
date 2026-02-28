@@ -8,7 +8,7 @@ from django.conf import settings
 from django.utils import timezone
 
 class CustomUser(AbstractUser):
-    parrain = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
+    parrain = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True,  related_name="filleul")
     gains = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     nom = models.CharField(max_length=255, null=True, blank=True)
     prenom = models.CharField(max_length=255, null=True, blank=True)
@@ -49,11 +49,13 @@ class Produit(models.Model):
     def __str__(self):
         return self.nom
     
-
+    
 class Panier(models.Model):
     utilisateur = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     produit = models.ForeignKey(Produit, on_delete=models.CASCADE)
     quantite = models.PositiveIntegerField(default=1)
+    date_ajout = models.DateTimeField(default=timezone.now)
+    est_paye = models.BooleanField(default=False)  # Pour savoir si ce panier a été payé
 
     def total_price(self):
         return self.produit.prix * self.quantite
@@ -80,6 +82,7 @@ class Profil(models.Model):
     parrain_code = models.CharField(max_length=30, blank=True,null=True)
     is_paid = models.BooleanField(default=False)
     date_created = models.DateTimeField(default=timezone.now)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
 
     #def __str__(self):
         #return self.utilisateur.username
@@ -146,3 +149,22 @@ class Vente(models.Model):
 
     def __str__(self):
         return f"{self.utilisateur.username} - {self.montant} FC"
+    
+class Commande(models.Model):
+
+    STATUT_CHOIX = [
+        ('EN_ATTENTE', 'En attente'),
+        ('PAYE', 'Payé'),
+        ('ANNULE', 'Annulé'),
+    ]
+
+    utilisateur = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    total = models.DecimalField(max_digits=12, decimal_places=2)
+    adresse = models.TextField()
+    methode_paiement = models.CharField(max_length=50)
+    statut = models.CharField(max_length=20, choices=STATUT_CHOIX, default='EN_ATTENTE')
+    date_creation = models.DateTimeField(default=timezone.now)
+    reference = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return f"Commande {self.reference} - {self.utilisateur.username}"
