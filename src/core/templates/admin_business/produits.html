@@ -1,0 +1,86 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+<h2 class="mb-4">Validation des produits</h2>
+
+<div class="table-responsive">
+
+<table class="table table-bordered align-middle">
+
+<thead class="table-dark">
+
+<tr>
+<th>Image</th>
+<th>Produit</th>
+<th>Description</th>
+<th>Prix</th>
+<th>Vendeur</th>
+<th>Statut</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for produit in produits %}
+
+<tr>
+
+<td>
+{% if produit.image %}
+<img src="{{ produit.image.url }}" width="80">
+{% endif %}
+</td>
+
+<td>{{ produit.nom }}</td>
+
+<td>{{ produit.description|truncatewords:15 }}</td>
+
+<td>{{ produit.prix }} FC</td>
+
+<td>{{ produit.vendeur.username }}</td>
+
+<td>
+
+{% if produit.statut == "en_attente" %}
+<span class="badge bg-warning text-dark">En attente</span>
+
+{% elif produit.statut == "valide" %}
+<span class="badge bg-success">Validé</span>
+
+{% elif produit.statut == "refuse" %}
+<span class="badge bg-danger">Refusé</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+<a href="{% url 'accepter_produit' produit.id %}" class="btn btn-success btn-sm">
+Valider
+</a>
+
+<a href="{% url 'refuser_produit' produit.id %}" class="btn btn-danger btn-sm">
+Refuser
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+{% endblock %}

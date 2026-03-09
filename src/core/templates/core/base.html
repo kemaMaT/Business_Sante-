@@ -49,22 +49,54 @@
 <body class="bg-slate-50 text-gray-900 font-[Inter] min-h-screen flex flex-col">
 
 
-  <!-- Header -->
-  <header class="bg-blue-900 text-white flex items-center justify-between px-6 py-4 shadow-md" style=" background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);">
-    <div class="flex items-center gap-4">
-      <!-- ✅ Toggle Button always visible -->
+ <!-- Header -->
+<header class="flex items-center justify-between px-6 py-4 shadow-md text-white"
+style="background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);">
 
-      <a href="{% url 'home' %}">
-        <button class="bg-accent p-2 rounded-md text-white hover:bg-green-600 transition">
-          <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-            <path d="pogytc" />
-          </svg>
-        </button>
+  <!-- Partie gauche -->
+  <div class="flex items-center gap-4">
+
+    <a href="{% url 'home' %}">
+      <button class="bg-green-500 p-2 rounded-md text-white hover:bg-green-600 transition">
+        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+          <path d="M10 2L2 10h3v6h4v-4h2v4h4v-6h3L10 2z"/>
+        </svg>
+      </button>
+    </a>
+
+    <h1 class="text-lg md:text-xl font-semibold" style="font-family:Verdana, Geneva, Tahoma, sans-serif;">
+      Bienvenue sur votre portail <span class="text-green-400">Business Santé</span>
+    </h1>
+
+  </div>
+
+  <!-- Partie droite -->
+  <div class="flex items-center gap-3">
+
+    {% if request.user.is_staff %}
+      <a href="{% url 'admin_produits' %}" class="bg-warning text-dark px-3 py-2 rounded">
+        Admin Produits
       </a>
+    {% endif %}
 
-      <h1 class="text-xl font-semibold" style="font-family:Verdana, Geneva, Tahoma, sans-serif;">Business Santé</h1>
-    </div>
-  </header>
+  {% if user.profil.avatar %}
+    <img src="{{ user.profil.avatar.url }}" 
+         class="w-9 h-9 rounded-full border-2 border-white">
+  {% endif %}
+
+  <span class="font-semibold">{{ user.username }}</span>
+
+  <form method="post" action="{% url 'logout' %}">
+  {% csrf_token %}
+  <button type="submit"
+          class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-sm font-semibold text-white transition">
+      Se déconnecter
+  </button>
+  </form>
+
+</div>
+
+</header>
 
   <div class="flex flex-1">
     <!-- Sidebar -->

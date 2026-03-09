@@ -124,7 +124,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'core.CustomUser'
 
 LOGIN_REDIRECT_URL = '/home/'
-LOGOUT_REDIRECT_URL = '/'  # Quand il se déconnecte, redirige vers la page de login
+#LOGOUT_REDIRECT_URL = '/'  # Quand il se déconnecte, redirige vers la page de login
 
 
 LOCALE_PATHS = [
@@ -143,7 +143,11 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/home/'
 LOGOUT_REDIRECT_URL = '/login/'
 
-FLUTTERWAVE_SECRET_KEY = "CLE_PRIVEE_DE_TEST"
-FLUTTERWAVE_PUBLIC_KEY = "CLE_PUBLIQUE_DE_TEST"
+CINETPAY_API_KEY = "VOTRE_API_KEY"
+CINETPAY_SITE_ID = "VOTRE_SITE_ID"
+#CINETPAY_NOTIFY_URL = "https://votredomaine.com/cinetpay-notify/"  # callback serveur
+#CINETPAY_RETURN_URL = "https://votredomaine.com/paiement_confirme/"  # redirect user
 
+CINETPAY_RETURN_URL = "http://127.0.0.1:8000/paiement_confirme/"
+CINETPAY_NOTIFY_URL = "http://127.0.0.1:8000/cinetpay-notify/"
 

@@ -22,6 +22,12 @@ urlpatterns = [
 
     # Produits & panier
     path('produits/', views.produits_list, name='produits'),
+    path("ajouter_produit/", views.ajouter_produit, name="ajouter_produit"),
+    path("mes_requetes/", views.mes_requetes, name="mes_requetes"),
+    path("admin_business/produits/", views.admin_produits, name="admin_produits"),
+    path("admin_business/accepter/<int:produit_id>/", views.accepter_produit, name="accepter_produit"),
+    path("admin_business/refuser/<int:produit_id>/", views.refuser_produit, name="refuser_produit"),
+    
     path('panier/', views.panier_view, name='panier'),
     path('ajouter-au-panier/<int:produit_id>/', views.ajouter_au_panier, name='ajouter_au_panier'),
     path('supprimer-du-panier/<int:produit_id>/', views.supprimer_du_panier, name='supprimer_du_panier'),
@@ -30,6 +36,8 @@ urlpatterns = [
     path('solde/', views.solde, name='solde'),
     path('payment/', views.payment, name='payment'),
     path('initier_paiement/', views.initier_paiement, name='initier_paiement'),
+    path("paiement_confirme/", views.paiement_confirme, name="paiement_confirme"),
+    path("cinetpay-notify/", views.cinetpay_notify, name="cinetpay_notify"),
 
     path("retrait/", views.retirer_gains, name="retrait"),
     path('retrait/', views.demander_retrait, name='demander_retrait'),

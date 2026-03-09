@@ -198,6 +198,51 @@
 
   </style>
 </head>
+
+<style>
+  .custom-input{
+  display:flex;
+  align-items:center;
+  background:#f7f9fa;
+  border-radius:12px;
+  padding:8px 12px;
+  border:1px solid #ddd;
+  transition:0.2s;
+}
+
+.custom-input:focus-within{
+  border-color:#007c91;
+  box-shadow:0 0 0 2px rgba(0,124,145,0.15);
+}
+
+.custom-input input{
+  border:none;
+  background:transparent;
+  outline:none;
+  width:100%;
+  padding:6px;
+  font-size:0.95rem;
+}
+
+.icon{
+  color:#007c91;
+  margin-right:8px;
+}
+
+.btn-register{
+  background:#007c91;
+  color:white;
+  font-weight:600;
+  border-radius:12px;
+  padding:10px;
+  transition:0.3s;
+}
+
+.btn-register:hover{
+  background:#005f6b;
+}
+
+</style>
 <body>
 
   <div class="container-flex">
@@ -245,56 +290,137 @@
   </div>
     </div>
 
-    <div class="register-card">
-      <div class="register-card-header">
-        <img src="{% static 'images/logo2.jpeg' %}" alt="Business Santé Logo">
-        <h2><i class="fas fa-user-plus me-2"></i> Inscription</h2>
+      <div class="register-card">
+  <div class="register-card-header">
+    <img src="{% static 'images/logo2.jpeg' %}" alt="Business Santé Logo">
+    <h2><i class="fas fa-user-plus me-2"></i>Créer un compte</h2>
+  </div>
+
+  <div class="register-card-body">
+
+    <form method="post" action="{% url 'register' %}">
+      {% csrf_token %}
+
+      {% for field in form %}
+      <div class="mb-3">
+
+        <label class="form-label fw-semibold">
+          {{ field.label }}
+        </label>
+
+        <div class="custom-input">
+
+          <span class="icon">
+            {% if field.name == 'email' %}
+              <i class="fas fa-envelope"></i>
+
+            {% elif field.name == 'phone_number' %}
+              <i class="fas fa-phone"></i>
+
+            {% elif 'password' in field.name %}
+              <i class="fas fa-lock"></i>
+
+            {% elif field.name == 'nom' or field.name == 'prenom' %}
+              <i class="fas fa-user"></i>
+
+            {% elif field.name == 'parrain_code' %}
+              <i class="fas fa-users"></i>
+
+            {% else %}
+              <i class="fas fa-edit"></i>
+            {% endif %}
+          </span>
+
+          {{ field }}
+
+        </div>
+
+        {% if field.help_text %}
+        <small class="text-muted">
+         {{ field.help_text|safe }}
+
+        </small>
+       
+        {% endif %}
+
+        {% if field.errors %}
+        <div class="text-danger small">
+          {{ field.errors|striptags }}
+        </div>
+        {% endif %}
+        </div>
+      {% endfor %}
+
+      <div class="d-grid mt-4">
+        <button type="submit" class="btn btn-register">
+          <i class="fas fa-check-circle me-2"></i>Créer mon compte
+        </button>
       </div>
 
-      <div class="register-card-body">
-        <form method="post" action="{% url 'register' %}">
-          {% csrf_token %}
-          {% for field in form %}
-            <div>
-              <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-              <div class="input-group">
-                <span class="input-group-text">
-                  {% if field.name == 'username' %}
-                    <i class="fas fa-user"></i>
-                  {% elif field.name == 'email' %}
-                    <i class="fas fa-envelope"></i>
-                  {% elif field.name == 'phone_number' %}
-                    <i class="fas fa-phone"></i>
-                  {% elif 'password' in field.name %}
-                    <i class="fas fa-lock"></i>
-                  {% else %}
-                    <i class="fas fa-edit"></i>
-                  {% endif %}
-                </span>
-                {{ field }}
-              </div>
-              {% if field.help_text %}
-                <small class="form-text text-muted">{{ field.help_text }}</small>
-              {% endif %}
-              {% if field.errors %}
-                <div class="text-danger">
-                  {{ field.errors|striptags }}
-                </div>
-              {% endif %}
-            </div>
-          {% endfor %}
-
-          <div class="d-grid mb-3">
-            <button type="submit" class="btn btn-register">Créer un compte</button>
-          </div>
-
-          <div class="text-center">
-            <p>Déjà membre ? <a href="{% url 'login' %}">Se connecter</a></p>
-          </div>
-        </form>
+      <div class="text-center mt-3">
+        <small>
+          Déjà membre ?
+          <a href="{% url 'login' %}">Se connecter</a>
+        </small>
       </div>
+
+    </form>
+
+  </div>
+</div>
     </div>
   </div>
+
+<script>
+
+const password1 = document.getElementById("id_password1");
+const password2 = document.getElementById("id_password2");
+
+const strengthBar = document.getElementById("password-strength-bar");
+const strengthText = document.getElementById("password-strength-text");
+const matchText = document.getElementById("password-match-text");
+
+password1.addEventListener("input", function(){
+
+    let strength = 0;
+    const password = password1.value;
+
+    if(password.length >= 8) strength++;
+    if(/[A-Z]/.test(password)) strength++;
+    if(/[a-z]/.test(password)) strength++;
+    if(/[0-9]/.test(password)) strength++;
+    if(/[^A-Za-z0-9]/.test(password)) strength++;
+
+    if(strength <= 2){
+        strengthBar.style.width = "33%";
+        strengthBar.className = "progress-bar bg-danger";
+        strengthText.innerText = "Mot de passe faible";
+    }
+    else if(strength <= 4){
+        strengthBar.style.width = "66%";
+        strengthBar.className = "progress-bar bg-warning";
+        strengthText.innerText = "Mot de passe moyen";
+    }
+    else{
+        strengthBar.style.width = "100%";
+        strengthBar.className = "progress-bar bg-success";
+        strengthText.innerText = "Mot de passe fort";
+    }
+
+});
+
+password2.addEventListener("input", function(){
+
+    if(password2.value === password1.value){
+        matchText.innerHTML = "<span style='color:green;'>✔ Les mots de passe correspondent</span>";
+    }
+    else{
+        matchText.innerHTML = "<span style='color:red;'>✖ Les mots de passe ne correspondent pas</span>";
+    }
+
+});
+
+</script>
 
 </body>
 </html>

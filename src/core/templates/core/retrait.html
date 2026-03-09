@@ -2,40 +2,148 @@
 
 {% block content %}
 
+<div class="container py-5">
+
+<!-- HEADER -->
+<div class="page-header mb-5 p-4 rounded-4 shadow d-flex justify-content-between align-items-center flex-wrap"
+     style="background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);">
+
+  <div style="max-width:700px;">
+    
+    <h1 class="fw-bold text-light mb-2"
+        style="font-size:2.2rem; letter-spacing:0.5px;">
+      <i class="fas fa-wallet text-warning me-2"></i>
+      Retirer mes gains
+    </h1>
+
+    <p class="mb-0" style="color:#d6e4ea; line-height:1.6;">
+      Vous pouvez effectuer ici une <strong class="text-warning">demande de retrait</strong> 
+      de vos gains accumulés sur la plateforme Business Santé.
+    </p>
+
+  </div>
+
+  <button onclick="goBack()" class="btn btn-light shadow-sm mt-3 mt-md-0">
+    <i class="fas fa-arrow-left me-1"></i> Retour
+  </button>
+
+</div>
+
+
+<!-- SOLDE -->
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+  <div class="card-body text-center">
+
+    <h5 class="text-muted mb-2">Solde disponible</h5>
+
+    <h2 class="fw-bold text-success">
+      {{ profil.solde|floatformat:0 }} FC
+    </h2>
+
+  </div>
+</div>
+
+
+<!-- FORMULAIRE -->
+<div class="card border-0 shadow-sm rounded-4">
+  <div class="card-body p-4">
+
+    <h5 class="fw-bold mb-4">
+      <i class="fas fa-money-bill-wave text-success me-2"></i>
+      Effectuer un retrait
+    </h5>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Montant à retirer</label>
+
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-coins"></i>
+          </span>
+
+          <input 
+          type="number"
+          class="form-control"
+          name="montant"
+          step="0.01"
+          min="0"
+          placeholder="Ex : 5000"
+          required>
+        </div>
+
+      </div>
+
+      <div class="d-grid">
+        <button class="btn btn-success btn-lg">
+          <i class="fas fa-paper-plane me-1"></i>
+          Demander le retrait
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+
+<!-- MESSAGES -->
+{% if messages %}
+<div class="mt-4">
+  {% for message in messages %}
+  <div class="alert alert-warning shadow-sm">
+    {{ message }}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+
+<!-- INFO -->
+<div class="alert alert-info mt-4 shadow-sm">
+  <i class="fas fa-info-circle me-2"></i>
+  Les retraits sont actuellement en cours de développement.  
+  Cette fonctionnalité sera bientôt disponible.
+</div>
+
+
+</div>
+
+
 <style>
-    .container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+
+.page-header{
+transition: all 0.3s ease;
 }
-.btn {
-    display: inline-block;
-    background-color: green;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 6px;
-    text-decoration: none;
+
+.page-header:hover{
+transform: translateY(-2px);
+}
+
+.card{
+transition: all 0.25s ease;
+}
+
+.card:hover{
+transform: translateY(-3px);
+box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
 
 </style>
 
-<h2>Retirer mes gains</h2>
-<p>Solde disponible : {{ profil.solde }} €</p>
 
-<form method="post">
-    {% csrf_token %}
-    <label for="montant">Montant à retirer :</label>
-    <input type="number" name="montant" step="0.01" min="0" required>
-    <button type="submit">Retirer</button>
-</form>
+<script>
 
-{% for message in messages %}
-<p style="color: red;">{{ message }}</p>
-{% endfor %}
+function goBack() {
+    if (document.referrer) {
+        window.history.back();
+    } else {
+        window.location.href = "{% url 'home' %}";
+    }
+}
 
-<h2>Demande de retrait</h2>
-<p>Fonctionnalité en construction... 😅</p>
-<a href="{% url 'home' %}">⬅ Retour</a>
+</script>
 
 {% endblock %}

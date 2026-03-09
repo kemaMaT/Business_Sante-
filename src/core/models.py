@@ -10,8 +10,9 @@ from django.utils import timezone
 class CustomUser(AbstractUser):
     parrain = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True,  related_name="filleul")
     gains = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    nom = models.CharField(max_length=255, null=True, blank=True)
-    prenom = models.CharField(max_length=255, null=True, blank=True)
+    first_name = models.CharField(max_length=150, null=True, blank=True)
+    last_name = models.CharField(max_length=150,null=True, blank=True)
+    telephone = models.CharField(max_length=20, blank=True)
 
 
     def save(self, *args, **kwargs):
@@ -38,18 +39,45 @@ class CustomUser(AbstractUser):
                 self.username = f"{base_username}{random.randint(10000,99999)}"
 
         super().save(*args, **kwargs)
-
-class Produit(models.Model):
-    nom = models.CharField(max_length=255)
-    prix = models.DecimalField(max_digits=10, decimal_places=2)
-    gain = models.DecimalField(max_digits=10, decimal_places=2)  # Gain qu’on reçoit à l’achat
-    description = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to="produits/", blank=True, null=True)
     
+class Produit(models.Model):
+
+    vendeur = models.ForeignKey(
+    CustomUser,
+    on_delete=models.CASCADE,
+    null=True,
+    blank=True
+)
+
+    nom = models.CharField(max_length=200)
+
+    description = models.TextField(default=None)
+
+    prix = models.DecimalField(max_digits=10, decimal_places=2)
+
+    image = models.ImageField(upload_to="produits/",blank=True, null=True)
+
+    statut = models.CharField(
+        max_length=20,
+        choices=[
+            ('en_attente', 'En attente'),
+            ('valide', 'Validé'),
+            ('refuse', 'Refusé')
+        ],
+        default='en_attente'
+    )
+
+    date_creation = models.DateTimeField(default=timezone.now)
+
+    commission_business = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        default=20
+    )
+
     def __str__(self):
         return self.nom
-    
-    
+
 class Panier(models.Model):
     utilisateur = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     produit = models.ForeignKey(Produit, on_delete=models.CASCADE)
@@ -71,13 +99,12 @@ class Profil(models.Model):
     on_delete=models.CASCADE,
     related_name="profil"
 )
-    parrain = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               on_delete=models.SET_NULL,
-                               null=True, blank=True,
-                               related_name='filleuls')  # important: related_name='filleuls'
+    #parrain = models.ForeignKey(settings.AUTH_USER_MODEL,
+                               #on_delete=models.SET_NULL,
+                               #null=True, blank=True,
+                               #related_name='filleuls')  # important: related_name='filleuls'
     solde = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     gains_retires = models.DecimalField(max_digits=12, decimal_places=2, default=0)
-    telephone = models.CharField(max_length=20, blank=True)
     mon_code = models.CharField(max_length=30, default=0, blank=True)
     parrain_code = models.CharField(max_length=30, blank=True,null=True)
     is_paid = models.BooleanField(default=False)
@@ -103,19 +130,7 @@ class Profil(models.Model):
             code = f"{base}{i}"
         return code
     
-    def get_generation(self):
-        """Retourne la génération du filleul"""
-        if not self.utilisateur.parrain:
-            return 0
-        elif not self.utilisateur.parrain.parrain:
-            return 1
-        elif not self.utilisateur.parrain.parrain.parrain:
-            return 2
-        elif not self.utilisateur.parrain.parrain.parrain.parrain:
-            return 3
-        else:
-            return 4  # plus de 3 générations = 4 (en rouge)
-
+    
 
     def __str__(self):
         return f"Profil de {self.utilisateur.username}"
@@ -149,7 +164,7 @@ class Vente(models.Model):
 
     def __str__(self):
         return f"{self.utilisateur.username} - {self.montant} FC"
-    
+
 class Commande(models.Model):
 
     STATUT_CHOIX = [
@@ -164,7 +179,7 @@ class Commande(models.Model):
     methode_paiement = models.CharField(max_length=50)
     statut = models.CharField(max_length=20, choices=STATUT_CHOIX, default='EN_ATTENTE')
     date_creation = models.DateTimeField(default=timezone.now)
-    reference = models.CharField(max_length=100, unique=True)
-
+    reference = models.CharField(max_length=100, null=True)
     def __str__(self):
         return f"Commande {self.reference} - {self.utilisateur.username}"
+        

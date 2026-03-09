@@ -1,0 +1,58 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+<h3 class="mb-4">Mes produits soumis</h3>
+
+<div class="table-responsive">
+<table class="table table-bordered align-middle">
+
+<thead class="table-dark">
+<tr>
+<th>Produit</th>
+<th>Prix</th>
+<th>Date</th>
+<th>Statut</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for produit in produits %}
+
+<tr>
+
+<td>{{ produit.nom }}</td>
+
+<td>{{ produit.prix }} FC</td>
+
+<td>{{ produit.date_creation|date:"d/m/Y" }}</td>
+
+<td>
+
+{% if produit.statut == "en_attente" %}
+<span class="badge bg-warning text-dark">En attente</span>
+
+{% elif produit.statut == "valide" %}
+<span class="badge bg-success">Accepté</span>
+
+{% elif produit.statut == "refuse" %}
+<span class="badge bg-danger">Refusé</span>
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+{% endblock %}

@@ -30,8 +30,9 @@
                      alt="Avatar" class="profile-photo">
               </div>
 
-              <h4 class="fw-bold mb-1">{{ user.username }}</h4>
-              <p class="text-muted mb-3">{{ user.email }}</p>
+              <h4 class="fw-bold mb-1">Nom d'utilisateur: {{ user.username }}</h4>
+              <h4 class="fw-bold mb-1">Prenom et Nom: {{ user.first_name }} {{ user.last_name }}</h4>
+              <p class="text-muted mb-3">Email: {{ user.email }}</p>
 
               <span class="badge bg-primary px-3 py-2 rounded-pill">
                 Membre Actif
@@ -59,7 +60,7 @@
                 <div class="col-md-6">
                   <div class="info-card">
                     <small>Téléphone</small>
-                    <div class="fw-semibold">{{ profil.telephone|default:"—" }}</div>
+                    <div class="fw-semibold">{{ user.telephone |default:"—"}}</div>
                   </div>
                 </div>
 
@@ -108,7 +109,7 @@
                 <div class="col-md-6">
                   <div class="info-card text-center">
                     <small>Parrain</small>
-                    <div class="fw-semibold">{{ profil.parrain.username|default:"Aucun" }}</div>
+                    <div class="fw-semibold">{{ user.parrain }}</div>
                   </div>
                 </div>
                 <div class="col-md-6">
