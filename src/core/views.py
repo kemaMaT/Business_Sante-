@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 import requests
-from .utils import generer_facture_pdf, get_generations_users, GEN_PERC
+#from .utils import generer_facture_pdf, get_generations_users, GEN_PERC
 
 from .models import Commande, CustomUser, Produit, Panier, Profil,Parrainage, Achat
 from .forms import PaiementForm, ProduitForm, RegisterForm
