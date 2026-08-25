@@ -94,6 +94,85 @@ def home(request):
     # Récupérer le profil associé à l'utilisateur
     profil = Profil.objects.get(utilisateur=utilisateur)
 
+    # ==========================================
+    # 1. GAINS PERSONNELS
+    # ==========================================
+    gain_propre = profil.solde or Decimal('0.00')
+
+    # ==========================================
+    # 2. GAINS DES FILLEULS PAR GÉNÉRATION
+    # ==========================================
+    gain_1 = Decimal('0.00')
+    gain_2 = Decimal('0.00')
+    gain_3 = Decimal('0.00')
+
+    # Tous les autres utilisateurs
+    tous_users = CustomUser.objects.exclude(id=utilisateur.id)
+
+    for u in tous_users:
+
+        # Déterminer la génération de cet utilisateur
+        # par rapport à l'utilisateur connecté
+        generation = generation_par_rapport_a(utilisateur, u)
+
+        # Vérifier que l'utilisateur possède bien un profil
+        try:
+            solde_filleul = u.profil.solde or Decimal('0.00')
+        except Profil.DoesNotExist:
+            solde_filleul = Decimal('0.00')
+
+        # Calcul des commissions
+        if generation == 1:
+            gain_1 += solde_filleul * Decimal('0.10')
+
+        elif generation == 2:
+            gain_2 += solde_filleul * Decimal('0.06')
+
+        elif generation == 3:
+            gain_3 += solde_filleul * Decimal('0.03')
+
+    # ==========================================
+    # 3. TOTAL GLOBAL DES GAINS
+    # ==========================================
+    total_gains = gain_propre + gain_1 + gain_2 + gain_3
+
+
+    # ==========================================
+    # AUTRES INFORMATIONS
+    # ==========================================
+    filleuls = Parrainage.objects.filter(parrain=utilisateur)
+
+    total_filleuls = CustomUser.objects.filter(
+        parrain=utilisateur
+    ).count()
+
+    achats = Panier.objects.filter(
+        utilisateur=utilisateur
+    )
+
+    context = {
+        # 👇 ICI, solde contient maintenant le TOTAL
+        'solde': total_gains,
+
+        'gain_propre': gain_propre,
+        'gain_1': gain_1,
+        'gain_2': gain_2,
+        'gain_3': gain_3,
+
+        'total_filleuls': total_filleuls,
+        'achats': achats,
+        'profil': profil,
+    }
+
+    return render(request, 'core/start.html', context)
+
+@login_required
+def homee(request):
+    utilisateur = request.user
+
+    # Récupérer le profil associé à l'utilisateur
+    profil = Profil.objects.get(utilisateur=utilisateur)
+
     total_gains = profil.solde
     filleuls = Parrainage.objects.filter(parrain=utilisateur)
     total_filleuls = CustomUser.objects.filter(parrain=utilisateur).count()
@@ -168,26 +247,6 @@ def produits_list(request):
 
  
     return render(request, "core/produits.html", {"produits": produits})
-
-@login_required
-def aajouter_produit(request):
-    if request.method == "POST":
-        form = ProduitForm(request.POST, request.FILES)
-        if form.is_valid():
-            produit = form.save(commit=False)
-
-            # ✅ AJOUT IMPORTANT
-            produit.vendeur = request.user
-
-            # produit en attente de validation
-            produit.statut = "en_attente"
-
-            produit.save()
-            return redirect("home")
-    else:
-        form = ProduitForm()
-
-    return render(request, "core/ajouter_produit.html", {"form": form})
 
 @login_required
 def ajouter_produit(request):
@@ -485,29 +544,6 @@ def solde(request):
 
     return render(request, 'core/solde.html', {'solde': solde})
 
-@login_required
-def mess_filleuls_view(request):
-    user= request.user
-
-    # Génération 1 : filleuls directs
-    gen1_users = CustomUser.objects.filter(parrain=user)
-
-    # Génération 2
-    gen2_users = CustomUser.objects.filter(parrain__in=gen1_users)
-
-    # Génération 3
-    gen3_users = CustomUser.objects.filter(parrain__in=gen2_users)
-
-    # Génération 4+
-    gen4_users = CustomUser.objects.filter(parrain__in=gen3_users)
-
-    all_users = list(gen1_users) + list(gen2_users) + list(gen3_users) + list(gen4_users)
-
-    # 👉 Convertir Users → Profils
-    filleuls = Profil.objects.filter(utilisateur__in=all_users)
-
-    return render(request, 'core/mes_filleuls.html', {'filleuls': filleuls})
-
 def generation_par_rapport_a(parent, enfant):
     """Retourne la génération (1,2,3...) OU 0 si ce n'est pas un descendant."""
     generation = 1
@@ -520,29 +556,6 @@ def generation_par_rapport_a(parent, enfant):
         generation += 1
 
     return 0
-
-@login_required
-def mess_filleuls_view(request):
-    user = request.user 
-
-    tous_users = CustomUser.objects.exclude(id=user.id)
-
-    filleuls = []
-
-    for u in tous_users:
-        gen = generation_par_rapport_a(user, u)
-        if gen > 0:
-            u.generation = gen   # on injecte dynamiquement l'info
-            filleuls.append(u)
-
-    # Trier par génération
-    filleuls = sorted(filleuls, key=lambda x: x.generation)
-
-    context = {
-        "filleuls": filleuls,
-    }
-
-    return render(request, "core/mes_filleuls.html", context)
 
 def generate_username_suggestions(first_name, last_name):
     year = datetime.now().year % 100  # ex: 25 pour 2025
@@ -621,7 +634,7 @@ def mes_gains_view(request):
         "historique": historique,
     }
 
-    return render(request, "core/mes_gains.html", context)
+    return render(request, "core/mes_gains.html",context)
     
 @login_required
 def mes_filleuls_view(request):
